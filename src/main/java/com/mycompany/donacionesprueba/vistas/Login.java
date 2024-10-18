@@ -29,8 +29,8 @@ public class Login extends javax.swing.JFrame {
         panelImage2 = new org.edisoncor.gui.panel.PanelImage();
         containerView = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        containerLOGIN = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout panelImage2Layout = new javax.swing.GroupLayout(panelImage2);
         panelImage2.setLayout(panelImage2Layout);
@@ -51,26 +51,13 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/Influencer Marketing.jpeg"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        containerLOGIN.setBackground(new java.awt.Color(255, 255, 255));
+        containerLOGIN.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setText("jLabel2");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jLabel2)
-                .addContainerGap(223, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel2)
-                .addContainerGap(367, Short.MAX_VALUE))
-        );
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Apoya a tus influencers favoritos!");
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        containerLOGIN.add(jLabel3, new java.awt.GridBagConstraints());
 
         javax.swing.GroupLayout containerViewLayout = new javax.swing.GroupLayout(containerView);
         containerView.setLayout(containerViewLayout);
@@ -78,7 +65,7 @@ public class Login extends javax.swing.JFrame {
             containerViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerViewLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(containerLOGIN, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -89,7 +76,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(containerViewLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(containerLOGIN, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,10 +130,10 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel containerLOGIN;
     private javax.swing.JPanel containerView;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel3;
     private org.edisoncor.gui.panel.PanelImage panelImage2;
     // End of variables declaration//GEN-END:variables
 }
