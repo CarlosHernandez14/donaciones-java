@@ -19,6 +19,7 @@ public class CreadorContenido extends Usuario implements Serializable {
     public CreadorContenido(String nombre, String email, String contrasena) {
         super(nombre, email, contrasena);
         this.contenidos = new ArrayList<>();
+        this.suscriptores = new ArrayList<>();
         this.cuentaBloqueada = false;
     }
 

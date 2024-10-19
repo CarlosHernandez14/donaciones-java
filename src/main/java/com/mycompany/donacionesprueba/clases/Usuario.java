@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author carlo
  */
 public class Usuario implements Serializable{
-    private int id;
+    private String id;
     private String nombre;
     private String correo;
     private String contrasena;
@@ -20,7 +20,7 @@ public class Usuario implements Serializable{
         
     }
 
-    public Usuario(int id, String nombre, String correo, String contrasena) {
+    public Usuario(String id, String nombre, String correo, String contrasena) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
@@ -33,11 +33,11 @@ public class Usuario implements Serializable{
         this.contrasena = contrasena;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
