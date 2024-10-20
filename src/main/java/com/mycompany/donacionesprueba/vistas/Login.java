@@ -8,6 +8,8 @@ import com.mycompany.donacionesprueba.clases.Administrador;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.vistas.admin.HomeAdminForm;
+import com.mycompany.donacionesprueba.vistas.influencer.HomeInfluencerForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -280,11 +282,24 @@ public class Login extends javax.swing.JFrame {
         if (usuario != null) {
             // Verficiamos el tipo del usuario si es Usuario, CrearContenido o Administrador
             if (usuario instanceof Administrador) {
-                JOptionPane.showMessageDialog(null, "Eres un administrador");
+                // Abrimos la ventana home del admin
+                new HomeAdminForm().setVisible(true);
+                //Cerramos la ventana actual
+                this.dispose();
+                
             } else if (usuario instanceof CreadorContenido) {
-                JOptionPane.showMessageDialog(null, "Eres un creador de contenido");
+                
+                // Abrimos la venana de home para creadores de contenido
+                new HomeInfluencerForm().setVisible(true);
+                
+                // Cerramos la ventana actual
+                this.dispose();
+                
             } else if (usuario instanceof Usuario) {
-                JOptionPane.showMessageDialog(null, "Eres un usuario");
+                // Abrimos la ventana Home Form
+                new HomeForm().setVisible(true);
+                // Cerramos ventana
+                this.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Usuario y/o contrasena incorrectos ");

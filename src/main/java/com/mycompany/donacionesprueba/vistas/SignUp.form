@@ -116,7 +116,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="labelSignup" min="-2" pref="79" max="-2" attributes="0"/>
+                                          <Component id="labelSignup" min="-2" pref="90" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="comboTypeUser" alignment="0" min="-2" pref="229" max="-2" attributes="0"/>
                                       <Component id="jSeparator5" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
@@ -218,7 +218,7 @@
                   <Color blue="0" green="33" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Regsitrate"/>
+                <Property name="text" type="java.lang.String" value="Registrate"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>
@@ -310,7 +310,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="No tienes una cuenta?"/>
+                <Property name="text" type="java.lang.String" value="Ya tienes una cuenta?"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelSignup">
@@ -321,11 +321,14 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="66" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Registrate"/>
+                <Property name="text" type="java.lang.String" value="Inicia sesion"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="labelSignupMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
               <Properties>

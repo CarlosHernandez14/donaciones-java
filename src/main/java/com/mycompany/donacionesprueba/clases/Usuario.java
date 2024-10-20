@@ -10,14 +10,14 @@ import java.io.Serializable;
  *
  * @author carlo
  */
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
     private String id;
     private String nombre;
     private String correo;
     private String contrasena;
-    
-    public Usuario(){
-        
+
+    public Usuario() {
+
     }
 
     public Usuario(String id, String nombre, String correo, String contrasena) {
@@ -26,11 +26,23 @@ public class Usuario implements Serializable{
         this.correo = correo;
         this.contrasena = contrasena;
     }
-    
+
     public Usuario(String nombre, String correo, String contrasena) {
         this.nombre = nombre;
         this.correo = correo;
         this.contrasena = contrasena;
+    }
+
+    // Algoritmo para generar un id aleatorio de 10 caracteres
+
+    public static String generarId() {
+        String id = "";
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (int i = 0; i < 10; i++) {
+            int indice = (int) (Math.random() * caracteres.length());
+            id += caracteres.charAt(indice);
+        }
+        return id;
     }
 
     public String getId() {
@@ -67,7 +79,8 @@ public class Usuario implements Serializable{
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", correo=" + correo + ", contrasena=" + contrasena + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", correo=" + correo + ", contrasena=" + contrasena
+                + '}';
     }
-    
+
 }

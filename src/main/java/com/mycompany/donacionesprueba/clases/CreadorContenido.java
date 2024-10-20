@@ -16,8 +16,8 @@ public class CreadorContenido extends Usuario implements Serializable {
     private boolean cuentaBloqueada;
     private ArrayList<Usuario> suscriptores;
 
-    public CreadorContenido(String nombre, String email, String contrasena) {
-        super(nombre, email, contrasena);
+    public CreadorContenido(String idUsuario, String nombre, String email, String contrasena) {
+        super(idUsuario, nombre, email, contrasena);
         this.contenidos = new ArrayList<>();
         this.suscriptores = new ArrayList<>();
         this.cuentaBloqueada = false;
@@ -43,7 +43,7 @@ public class CreadorContenido extends Usuario implements Serializable {
         // Lógica para verificar si es un "partner"
         return (this.getSuscriptores().size() >= 1000 && calcularPromedioLikes() >= 500);
     }
-    
+
     // Método para calcular el promedio de likes de los contenidos
     public double calcularPromedioLikes() {
         double totalLikes = 0;
@@ -52,7 +52,6 @@ public class CreadorContenido extends Usuario implements Serializable {
         }
         return totalLikes / contenidos.size();
     }
-    
 
     // Getters y setters
 
@@ -82,7 +81,8 @@ public class CreadorContenido extends Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada=" + cuentaBloqueada + ", suscriptores=" + suscriptores + '}';
+        return "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada=" + cuentaBloqueada
+                + ", suscriptores=" + suscriptores + '}';
     }
-    
+
 }
