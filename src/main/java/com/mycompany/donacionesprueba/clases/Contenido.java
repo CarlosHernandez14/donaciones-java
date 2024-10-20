@@ -16,8 +16,9 @@ public class Contenido implements Serializable{
     private ArrayList<Like> likes;
     private List<String> comentarios;
     private double donaciones;
+    private String imagePath;
 
-    public Contenido(String titulo, String descripcion, CreadorContenido creador) {
+    public Contenido(String titulo, String descripcion, CreadorContenido creador, String imagePath) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.creador = creador;
@@ -25,6 +26,7 @@ public class Contenido implements Serializable{
         this.likes = new ArrayList<>();
         this.comentarios = new ArrayList<>();
         this.donaciones = 0.0;
+        this.imagePath = imagePath;
     }
 
     public void agregarComentario(String comentario, Usuario usuario) {
@@ -100,6 +102,15 @@ public class Contenido implements Serializable{
     public void setDonaciones(double donaciones) {
         this.donaciones = donaciones;
     }
+    
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+    
 
     @Override
     public String toString() {

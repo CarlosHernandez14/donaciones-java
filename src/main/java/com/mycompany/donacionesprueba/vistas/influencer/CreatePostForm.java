@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+
+import com.mycompany.donacionesprueba.clases.Contenido;
+import com.mycompany.donacionesprueba.clases.CreadorContenido;
+
 import jnafilechooser.api.JnaFileChooser;
 
 /**
@@ -17,13 +21,22 @@ import jnafilechooser.api.JnaFileChooser;
  * @author carlo
  */
 public class CreatePostForm extends javax.swing.JFrame {
-
+    
+    private CreadorContenido influencer;
     /**
      * Creates new form CreatePostForm
      */
     public CreatePostForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+    }
+    
+    public CreatePostForm(CreadorContenido influencer) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        
+        this.influencer = influencer;
     }
 
     /**
@@ -43,8 +56,8 @@ public class CreatePostForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        fieldSearchBar1 = new org.edisoncor.gui.textField.TextFieldRound();
-        fieldSearchBar2 = new org.edisoncor.gui.textField.TextFieldRound();
+        fieldDescription = new org.edisoncor.gui.textField.TextFieldRound();
+        fieldTittle = new org.edisoncor.gui.textField.TextFieldRound();
         jSeparator1 = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
         btnCreateContent = new javax.swing.JButton();
@@ -103,11 +116,11 @@ public class CreatePostForm extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Descripcion");
 
-        fieldSearchBar1.setBackground(new java.awt.Color(255, 255, 255));
-        fieldSearchBar1.setText("Escribe  una descripcion..");
+        fieldDescription.setBackground(new java.awt.Color(255, 255, 255));
+        fieldDescription.setText("Escribe  una descripcion..");
 
-        fieldSearchBar2.setBackground(new java.awt.Color(255, 255, 255));
-        fieldSearchBar2.setText("Nombre del contenido...");
+        fieldTittle.setBackground(new java.awt.Color(255, 255, 255));
+        fieldTittle.setText("Nombre del contenido...");
 
         jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
@@ -116,6 +129,7 @@ public class CreatePostForm extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -127,6 +141,7 @@ public class CreatePostForm extends javax.swing.JFrame {
         btnCreateContent.setForeground(new java.awt.Color(255, 255, 255));
         btnCreateContent.setText("Agregar contenido");
         btnCreateContent.setBorderPainted(false);
+        btnCreateContent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCreateContent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreateContentActionPerformed(evt);
@@ -143,17 +158,15 @@ public class CreatePostForm extends javax.swing.JFrame {
             }
         });
 
-        panelImagePreview.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-
         javax.swing.GroupLayout panelImagePreviewLayout = new javax.swing.GroupLayout(panelImagePreview);
         panelImagePreview.setLayout(panelImagePreviewLayout);
         panelImagePreviewLayout.setHorizontalGroup(
             panelImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 275, Short.MAX_VALUE)
+            .addGap(0, 255, Short.MAX_VALUE)
         );
         panelImagePreviewLayout.setVerticalGroup(
             panelImagePreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGap(0, 203, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -163,7 +176,7 @@ public class CreatePostForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fieldSearchBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldTittle, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -172,7 +185,7 @@ public class CreatePostForm extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fieldSearchBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(btnSelectImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -200,11 +213,11 @@ public class CreatePostForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(fieldSearchBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldTittle, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(fieldSearchBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -238,6 +251,45 @@ public class CreatePostForm extends javax.swing.JFrame {
 
     private void btnCreateContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateContentActionPerformed
         // TODO add your handling code here:
+        
+        // Obtenemos los datos de los inputs
+        String titulo = this.fieldTittle.getText();
+        String descripcion = this.fieldDescription.getText();
+        // Obtenemos la imagen del panel de vista previa
+        ImageIcon imageIcon = (ImageIcon) this.panelImagePreview.getIcon();
+        Image image = imageIcon.getImage();
+
+        // Obtenemos el formato de la imagen (png, jpg, jpeg)
+        String format = imageIcon.getDescription();
+
+        // Guardamos la imagen en el disco en la carpeta de imagenes
+        try {
+            // Convertimos la imagen a buffered image para poder guardarla
+            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            // Dibujamos la imagen en el buffered image para poder guardarla
+            bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+            // Creamos  el archivo con el titulo y el formato de la imagen seleccionada
+            File file = new File("src/main/java/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format);
+            // Guardamos la imagen en el disco
+            ImageIO.write(bufferedImage, format, file);
+
+            // Creamos el contenido
+            
+            // Obtenemos el path relativo de la imagen dentro del proyecto en la carpeta de imagenes
+            String imagePath = "/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format;
+            // Creamos el contenido
+            Contenido contenido = new Contenido(titulo, descripcion, influencer, imagePath);
+
+
+            // Guardamos el contenido en la DB
+            influencer.crearContenido(titulo, descripcion, imagePath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            System.out.println("Error al crear el contenido, no se pudo guardar la imagen");
+        }
+
     }//GEN-LAST:event_btnCreateContentActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -312,8 +364,8 @@ public class CreatePostForm extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateContent;
     private javax.swing.JButton btnSelectImage;
     private javax.swing.JPanel containerView;
-    private org.edisoncor.gui.textField.TextFieldRound fieldSearchBar1;
-    private org.edisoncor.gui.textField.TextFieldRound fieldSearchBar2;
+    private org.edisoncor.gui.textField.TextFieldRound fieldDescription;
+    private org.edisoncor.gui.textField.TextFieldRound fieldTittle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

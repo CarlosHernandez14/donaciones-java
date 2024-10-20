@@ -4,18 +4,27 @@
  */
 package com.mycompany.donacionesprueba.vistas.influencer;
 
+import com.mycompany.donacionesprueba.clases.CreadorContenido;
+
 /**
  *
  * @author carlo
  */
 public class HomeInfluencerForm extends javax.swing.JFrame {
 
+    private CreadorContenido influencer;
     /**
      * Creates new form HomeInfluencerForm
      */
     public HomeInfluencerForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public HomeInfluencerForm(CreadorContenido influencer) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.influencer = influencer;
     }
 
     /**
@@ -220,7 +229,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
     private void btnAddContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddContentActionPerformed
         
         // Abrimos ventana para crear post
-        new CreatePostForm().setVisible(true);
+        new CreatePostForm(influencer).setVisible(true);
         
         
     }//GEN-LAST:event_btnAddContentActionPerformed

@@ -6,6 +6,7 @@ package com.mycompany.donacionesprueba.dao;
 
 import com.google.gson.reflect.TypeToken;
 import com.mycompany.donacionesprueba.clases.Administrador;
+import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import java.io.IOException;
@@ -109,21 +110,55 @@ public class Dao {
     // Metodo para guardar un administrador
     public static void guardarAdministrador(Administrador administrador) throws IOException {
         try {
+            // Creamos un objeto de tipo GenericDao para administradores
             GenericDao<Administrador> administradorDao = new GenericDao<>("administrador.json",
                     new TypeToken<List<Administrador>>() {
                     });
+            // Cargamos los administradores actuales
             List<Administrador> administradores = administradorDao.cargar();
 
             // Encriptamos la contraseña
             administrador.setContrasena(sha1Encrypt(administrador.getContrasena()));
 
+            // Guardamos el administrador
             administradores.add(administrador);
             administradorDao.guardar(administradores);
         } catch (IOException ex) {
+            // Imprimimos el error
             System.out.println("Error al guardar el administrador");
             // Arrojamos una excepción
             throw new IOException("Error al guardar el administrador");
         }
+    }
+
+    // Metodo para guardar contenido
+    public static void guardarContenido(Contenido contenido) throws IOException {
+        // Guardar contenido
+
+        try {
+            // Leemos los contenidos actuales del archivo json
+            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            });
+            // Cargamos los contenidos actuales
+            List<Contenido> contenidos = contenidoDao.cargar();
+
+            // Guardamos el contenido
+            contenidos.add(contenido);
+
+            contenidoDao.guardar(contenidos);
+        } catch (IOException ex) {
+            // Imprimimos el error
+            System.out.println("Error al guardar el contenido");
+            // Arrojamos una excepción
+            throw new IOException("Error al guardar el contenido");
+        }
+    }
+
+    // Metodo para obtener todos los contenidos
+    public static List<Contenido> obtenerContenidos() {
+        GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+        });
+        return contenidoDao.cargar();
     }
 
     // Metodo para encryptar el password del usuario en sha1

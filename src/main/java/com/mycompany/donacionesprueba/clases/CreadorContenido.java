@@ -23,13 +23,15 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.cuentaBloqueada = false;
     }
 
-    public void crearContenido(String titulo, String descripcion) {
+    public void crearContenido(String titulo, String descripcion, String imagePath) {
         if (cuentaBloqueada) {
             System.out.println("Cuenta bloqueada. No puedes crear contenido.");
             return;
         }
-        Contenido nuevoContenido = new Contenido(titulo, descripcion, this);
+        Contenido nuevoContenido = new Contenido(titulo, descripcion, this, imagePath);
         contenidos.add(nuevoContenido);
+
+        // Actualizamos la base de datos
     }
 
     public void verificarActividad() {
