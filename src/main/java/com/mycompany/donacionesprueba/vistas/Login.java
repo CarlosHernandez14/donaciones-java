@@ -288,9 +288,9 @@ public class Login extends javax.swing.JFrame {
                 this.dispose();
                 
             } else if (usuario instanceof CreadorContenido) {
-                
+                CreadorContenido creador = (CreadorContenido) usuario;
                 // Abrimos la venana de home para creadores de contenido
-                new HomeInfluencerForm().setVisible(true);
+                new HomeInfluencerForm(creador).setVisible(true);
                 
                 // Cerramos la ventana actual
                 this.dispose();

@@ -39,7 +39,7 @@ public class DonacionesPrueba {
         // usuarios.add(maria);
 
         // usuarioDao.guardar(usuarios);
-
+ 
         // // Crear un creador de contenido
         // GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
         //         new TypeToken<List<CreadorContenido>>() {

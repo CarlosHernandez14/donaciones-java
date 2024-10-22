@@ -25,6 +25,8 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.influencer = influencer;
+        
+        System.out.println("Creador: " + this.influencer);
     }
 
     /**

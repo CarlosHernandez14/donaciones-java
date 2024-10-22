@@ -83,7 +83,7 @@ public class CreadorContenido extends Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada=" + cuentaBloqueada
+        return super.toString() + "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada=" + cuentaBloqueada
                 + ", suscriptores=" + suscriptores + '}';
     }
 
