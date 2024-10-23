@@ -13,6 +13,9 @@ import javax.swing.ImageIcon;
 
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import jnafilechooser.api.JnaFileChooser;
 
@@ -21,21 +24,22 @@ import jnafilechooser.api.JnaFileChooser;
  * @author carlo
  */
 public class CreatePostForm extends javax.swing.JFrame {
-    
+
     private CreadorContenido influencer;
+
     /**
      * Creates new form CreatePostForm
      */
     public CreatePostForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
     }
-    
+
     public CreatePostForm(CreadorContenido influencer) {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         this.influencer = influencer;
     }
 
@@ -142,9 +146,9 @@ public class CreatePostForm extends javax.swing.JFrame {
         btnCreateContent.setText("Agregar contenido");
         btnCreateContent.setBorderPainted(false);
         btnCreateContent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCreateContent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateContentActionPerformed(evt);
+        btnCreateContent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCreateContentMouseClicked(evt);
             }
         });
 
@@ -249,49 +253,6 @@ public class CreatePostForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCreateContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateContentActionPerformed
-        // TODO add your handling code here:
-        
-        // Obtenemos los datos de los inputs
-        String titulo = this.fieldTittle.getText();
-        String descripcion = this.fieldDescription.getText();
-        // Obtenemos la imagen del panel de vista previa
-        ImageIcon imageIcon = (ImageIcon) this.panelImagePreview.getIcon();
-        Image image = imageIcon.getImage();
-
-        // Obtenemos el formato de la imagen (png, jpg, jpeg)
-        String format = imageIcon.getDescription();
-
-        // Guardamos la imagen en el disco en la carpeta de imagenes
-        try {
-            // Convertimos la imagen a buffered image para poder guardarla
-            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-            // Dibujamos la imagen en el buffered image para poder guardarla
-            bufferedImage.getGraphics().drawImage(image, 0, 0, null);
-            // Creamos  el archivo con el titulo y el formato de la imagen seleccionada
-            File file = new File("src/main/java/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format);
-            // Guardamos la imagen en el disco
-            ImageIO.write(bufferedImage, format, file);
-
-            // Creamos el contenido
-            
-            // Obtenemos el path relativo de la imagen dentro del proyecto en la carpeta de imagenes
-            String imagePath = "/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format;
-            // Creamos el contenido
-            Contenido contenido = new Contenido(titulo, descripcion, influencer, imagePath);
-
-
-            // Guardamos el contenido en la DB
-            influencer.crearContenido(titulo, descripcion, imagePath);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            System.out.println("Error al crear el contenido, no se pudo guardar la imagen");
-        }
-
-    }//GEN-LAST:event_btnCreateContentActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
 
@@ -323,6 +284,58 @@ public class CreatePostForm extends javax.swing.JFrame {
             this.panelImagePreview.repaint();     // Fuerza a que el panel se redibuje
         }
     }//GEN-LAST:event_btnSelectImageActionPerformed
+
+    private void btnCreateContentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateContentMouseClicked
+        // TODO add your handling code here:
+
+        // Obtenemos los datos de los inputs
+        String titulo = this.fieldTittle.getText();
+        String descripcion = this.fieldDescription.getText();
+        // Obtenemos la imagen del panel de vista previa
+        ImageIcon imageIcon = (ImageIcon) this.panelImagePreview.getIcon();
+        Image image = imageIcon.getImage();
+
+        // Obtenemos el formato de la imagen (png, jpg, jpeg)
+        String format = imageIcon.getDescription();
+        System.out.println("Descriptoin image: " + format);
+        String[] formatData = format.split("."); // ARREGLAR ESTO
+
+        // Guardamos la imagen en el disco en la carpeta de imagenes
+        try {
+            // Convertimos la imagen a buffered image para poder guardarla
+            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            // Dibujamos la imagen en el buffered image para poder guardarla
+            bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+            // Creamos  el archivo con el titulo y el formato de la imagen seleccionada
+            File file = new File("/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format);
+            // Guardamos la imagen en el disco
+            ImageIO.write(bufferedImage, format, file);
+
+            // Creamos el contenido
+            // Obtenemos el path relativo de la imagen dentro del proyecto en la carpeta de imagenes
+            String imagePath = "/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format;
+            
+            System.out.println("Image path to create:" + imagePath);
+            // Creamos el contenido
+            Contenido contenido = new Contenido(titulo, descripcion, influencer.getId(), imagePath);
+
+            // Guardamos el contenido en la DB
+            influencer.crearContenido(titulo, descripcion, imagePath);
+            
+            JOptionPane.showMessageDialog(null, "Contenido publicado con exito");
+            
+            // Cerramos la ventana
+            this.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            System.out.println("Error al crear el contenido, no se pudo guardar la imagen");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            
+            System.out.println("Error al crear el contenido");
+        }
+    }//GEN-LAST:event_btnCreateContentMouseClicked
 
     /**
      * @param args the command line arguments

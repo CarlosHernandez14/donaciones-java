@@ -107,6 +107,33 @@ public class Dao {
         }
     }
 
+    // Metodo para actualizar creador de contenido
+    public static void actualizarCreadorContenido(CreadorContenido creadorContenido) throws IOException {
+        try {
+            // Leemos los creadores de contenido actuales del archivo json
+            GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+                    new TypeToken<List<CreadorContenido>>() {
+                    });
+            // Cargamos los creadores de contenido actuales
+            List<CreadorContenido> creadoresContenido = creadorContenidoDao.cargar();
+
+            // Buscamos el creador de contenido a actualizar
+            for (int i = 0; i < creadoresContenido.size(); i++) {
+                if (creadoresContenido.get(i).getId().equals(creadorContenido.getId())) {
+                    creadoresContenido.set(i, creadorContenido);
+                    break;
+                }
+            }
+
+            creadorContenidoDao.guardar(creadoresContenido);
+        } catch (IOException ex) {
+            // Imprimimos el error
+            System.out.println("Error al actualizar el creador de contenido");
+            // Arrojamos una excepción
+            throw new IOException("Error al actualizar el creador de contenido");
+        }
+    }
+
     // Metodo para guardar un administrador
     public static void guardarAdministrador(Administrador administrador) throws IOException {
         try {
@@ -141,16 +168,19 @@ public class Dao {
             });
             // Cargamos los contenidos actuales
             List<Contenido> contenidos = contenidoDao.cargar();
-
+            
             // Guardamos el contenido
             contenidos.add(contenido);
 
             contenidoDao.guardar(contenidos);
+            
+            //System.out.println("Se guardo el contenido");
         } catch (IOException ex) {
+            ex.printStackTrace();
             // Imprimimos el error
             System.out.println("Error al guardar el contenido");
             // Arrojamos una excepción
-            throw new IOException("Error al guardar el contenido");
+            throw ex;
         }
     }
 
@@ -159,6 +189,32 @@ public class Dao {
         GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
         });
         return contenidoDao.cargar();
+    }
+
+    // Metodo para actualizar contenido
+    public static void actualizarContenido(Contenido contenido) throws IOException {
+        try {
+            // Leemos los contenidos actuales del archivo json
+            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            });
+            // Cargamos los contenidos actuales
+            List<Contenido> contenidos = contenidoDao.cargar();
+
+            // Buscamos el contenido a actualizar
+            for (int i = 0; i < contenidos.size(); i++) {
+                if (contenidos.get(i).getId().equals(contenido.getId())) {
+                    contenidos.set(i, contenido);
+                    break;
+                }
+            }
+
+            contenidoDao.guardar(contenidos);
+        } catch (IOException ex) {
+            // Imprimimos el error
+            System.out.println("Error al actualizar el contenido");
+            // Arrojamos una excepción
+            throw new IOException("Error al actualizar el contenido");
+        }
     }
 
     // Metodo para encryptar el password del usuario en sha1

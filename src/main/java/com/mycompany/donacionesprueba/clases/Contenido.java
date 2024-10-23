@@ -8,24 +8,40 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contenido implements Serializable{
+public class Contenido implements Serializable {
+    private String id;
     private String titulo;
     private String descripcion;
-    private CreadorContenido creador;
+    private String idCreador;
     private int visualizaciones;
     private ArrayList<Like> likes;
     private List<String> comentarios;
     private double donaciones;
     private String imagePath;
 
-    public Contenido(String titulo, String descripcion, CreadorContenido creador, String imagePath) {
+    public Contenido(String titulo, String descripcion, String idCreador, String imagePath) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.creador = creador;
+        this.idCreador = idCreador;
         this.visualizaciones = 0;
         this.likes = new ArrayList<>();
         this.comentarios = new ArrayList<>();
         this.donaciones = 0.0;
+        this.imagePath = imagePath;
+        this.id = generarId();
+    }
+
+    // Constructor para cargar contenido desde la DB
+    public Contenido(String id, String titulo, String descripcion, String idCreador, int visualizaciones,
+            ArrayList<Like> likes, List<String> comentarios, double donaciones, String imagePath) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.idCreador = idCreador;
+        this.visualizaciones = visualizaciones;
+        this.likes = likes;
+        this.comentarios = comentarios;
+        this.donaciones = donaciones;
         this.imagePath = imagePath;
     }
 
@@ -36,16 +52,38 @@ public class Contenido implements Serializable{
     public void agregarLike(int idUsuario, int idContenido) {
         Like like = new Like(idUsuario, idContenido);
         likes.add(like);
-        
+
         // Agregamos el like a la DB
-        
+
     }
 
     public void recibirDonacion(Usuario usuario, double cantidad) {
         donaciones += cantidad;
     }
 
+    // Metodo para generar un id unico para el contenido que incluya letras y
+    // numeros
+    public static String generarId() {
+        String id = "";
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String numeros = "0123456789";
+        for (int i = 0; i < 5; i++) {
+            id += letras.charAt((int) (Math.random() * letras.length()));
+            id += numeros.charAt((int) (Math.random() * numeros.length()));
+        }
+        return id;
+    }
+
     // Getters y setters
+    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -63,12 +101,12 @@ public class Contenido implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public CreadorContenido getCreador() {
-        return creador;
+    public String getIdCreador() {
+        return this.idCreador;
     }
 
-    public void setCreador(CreadorContenido creador) {
-        this.creador = creador;
+    public void setIdCreador(String idCreador) {
+        this.idCreador = idCreador;
     }
 
     public int getVisualizaciones() {
@@ -102,7 +140,7 @@ public class Contenido implements Serializable{
     public void setDonaciones(double donaciones) {
         this.donaciones = donaciones;
     }
-    
+
     public String getImagePath() {
         return imagePath;
     }
@@ -110,12 +148,12 @@ public class Contenido implements Serializable{
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-    
 
     @Override
     public String toString() {
-        return "Contenido{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", creador=" + creador + ", visualizaciones=" + visualizaciones + ", likes=" + likes + ", comentarios=" + comentarios + ", donaciones=" + donaciones + '}';
+        return "Contenido{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", creador=" + idCreador
+                + ", visualizaciones=" + visualizaciones + ", likes=" + likes + ", comentarios=" + comentarios
+                + ", donaciones=" + donaciones + '}';
     }
-    
-    
+
 }

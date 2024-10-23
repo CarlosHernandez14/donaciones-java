@@ -41,7 +41,7 @@ public class GenericDao<T> {
         try (FileReader reader = new FileReader(filePath)) {
             return (List<T>) gson.fromJson(reader, listType);
         } catch (IOException e) {
-            // e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Error al obtener los archivos de la base de datos");
             return new ArrayList<>();
         }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
+import com.mycompany.donacionesprueba.dao.Dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * @author carlo
  */
 public class CreadorContenido extends Usuario implements Serializable {
+
     private ArrayList<Contenido> contenidos;
     private boolean cuentaBloqueada;
     private ArrayList<Usuario> suscriptores;
@@ -23,15 +25,27 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.cuentaBloqueada = false;
     }
 
-    public void crearContenido(String titulo, String descripcion, String imagePath) {
-        if (cuentaBloqueada) {
-            System.out.println("Cuenta bloqueada. No puedes crear contenido.");
-            return;
-        }
-        Contenido nuevoContenido = new Contenido(titulo, descripcion, this, imagePath);
-        contenidos.add(nuevoContenido);
+    public void crearContenido(String titulo, String descripcion, String imagePath) throws Exception {
+        try {
 
-        // Actualizamos la base de datos
+            if (cuentaBloqueada) {
+                System.out.println("Cuenta bloqueada. No puedes crear contenido.");
+                return;
+            }
+            Contenido nuevoContenido = new Contenido(titulo, descripcion, this.getId(), imagePath);
+            contenidos.add(nuevoContenido);
+
+            // Actualizamos la base de datos
+            Dao.guardarContenido(nuevoContenido);
+
+            // Actualizamos los datos de CreadorContenido en la DB
+            Dao.actualizarCreadorContenido(this);
+
+        } catch (Exception e) {
+            // Propagamos la excepción
+            throw e;
+        }
+
     }
 
     public void verificarActividad() {
@@ -56,7 +70,6 @@ public class CreadorContenido extends Usuario implements Serializable {
     }
 
     // Getters y setters
-
     public ArrayList<Contenido> getContenidos() {
         return contenidos;
     }
@@ -83,7 +96,8 @@ public class CreadorContenido extends Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada=" + cuentaBloqueada
+        return super.toString() + "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada="
+                + cuentaBloqueada
                 + ", suscriptores=" + suscriptores + '}';
     }
 
