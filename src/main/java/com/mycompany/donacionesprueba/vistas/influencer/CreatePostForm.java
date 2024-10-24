@@ -26,6 +26,7 @@ import jnafilechooser.api.JnaFileChooser;
 public class CreatePostForm extends javax.swing.JFrame {
 
     private CreadorContenido influencer;
+    private HomeInfluencerForm homeInfluencerForm;
 
     /**
      * Creates new form CreatePostForm
@@ -36,11 +37,12 @@ public class CreatePostForm extends javax.swing.JFrame {
 
     }
 
-    public CreatePostForm(CreadorContenido influencer) {
+    public CreatePostForm(CreadorContenido influencer, HomeInfluencerForm homeInfluencerForm) {
         initComponents();
         this.setLocationRelativeTo(null);
 
         this.influencer = influencer;
+        this.homeInfluencerForm = homeInfluencerForm;
     }
 
     /**
@@ -296,9 +298,7 @@ public class CreatePostForm extends javax.swing.JFrame {
         Image image = imageIcon.getImage();
 
         // Obtenemos el formato de la imagen (png, jpg, jpeg)
-        String format = imageIcon.getDescription();
-        System.out.println("Descriptoin image: " + format);
-        String[] formatData = format.split("."); // ARREGLAR ESTO
+        String format = imageIcon.getDescription().split("\\.")[1];
 
         // Guardamos la imagen en el disco en la carpeta de imagenes
         try {
@@ -306,16 +306,20 @@ public class CreatePostForm extends javax.swing.JFrame {
             BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
             // Dibujamos la imagen en el buffered image para poder guardarla
             bufferedImage.getGraphics().drawImage(image, 0, 0, null);
-            // Creamos  el archivo con el titulo y el formato de la imagen seleccionada
-            File file = new File("/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format);
+            // Crear la carpeta /imagenes dentro del proyecto si no existe
+            File directory = new File("imagenes/");
+            if (!directory.exists()) {
+                directory.mkdirs(); // Crea el directorio si no existe
+            }
+
+            // Crear el archivo con el título y el formato de la imagen seleccionada
+            File file = new File(directory, titulo + "." + format);
             // Guardamos la imagen en el disco
             ImageIO.write(bufferedImage, format, file);
 
             // Creamos el contenido
-            // Obtenemos el path relativo de la imagen dentro del proyecto en la carpeta de imagenes
-            String imagePath = "/com/mycompany/donacionesprueba/imagenes/" + titulo + "." + format;
-            
-            System.out.println("Image path to create:" + imagePath);
+            String imagePath = directory.getPath() + "/" + titulo + "." + format;
+            System.out.println("Image path to create: " + imagePath);
             // Creamos el contenido
             Contenido contenido = new Contenido(titulo, descripcion, influencer.getId(), imagePath);
 
@@ -324,6 +328,8 @@ public class CreatePostForm extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Contenido publicado con exito");
             
+            this.homeInfluencerForm.actualizarDatos();
+
             // Cerramos la ventana
             this.dispose();
         } catch (IOException e) {
@@ -332,7 +338,7 @@ public class CreatePostForm extends javax.swing.JFrame {
             System.out.println("Error al crear el contenido, no se pudo guardar la imagen");
         } catch (Exception ex) {
             ex.printStackTrace();
-            
+
             System.out.println("Error al crear el contenido");
         }
     }//GEN-LAST:event_btnCreateContentMouseClicked

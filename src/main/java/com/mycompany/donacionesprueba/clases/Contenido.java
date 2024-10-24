@@ -13,7 +13,7 @@ public class Contenido implements Serializable {
     private String titulo;
     private String descripcion;
     private String idCreador;
-    private int visualizaciones;
+    private ArrayList<Visualizacion> visualizaciones;
     private ArrayList<Like> likes;
     private List<String> comentarios;
     private double donaciones;
@@ -23,7 +23,7 @@ public class Contenido implements Serializable {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.idCreador = idCreador;
-        this.visualizaciones = 0;
+        this.visualizaciones = new ArrayList<>();
         this.likes = new ArrayList<>();
         this.comentarios = new ArrayList<>();
         this.donaciones = 0.0;
@@ -32,7 +32,7 @@ public class Contenido implements Serializable {
     }
 
     // Constructor para cargar contenido desde la DB
-    public Contenido(String id, String titulo, String descripcion, String idCreador, int visualizaciones,
+    public Contenido(String id, String titulo, String descripcion, String idCreador, ArrayList<Visualizacion> visualizaciones,
             ArrayList<Like> likes, List<String> comentarios, double donaciones, String imagePath) {
         this.id = id;
         this.titulo = titulo;
@@ -49,11 +49,11 @@ public class Contenido implements Serializable {
         comentarios.add(usuario.getNombre() + ": " + comentario);
     }
 
-    public void agregarLike(int idUsuario, int idContenido) {
+    public void agregarLike(String idUsuario, String idContenido) {
         Like like = new Like(idUsuario, idContenido);
         likes.add(like);
 
-        // Agregamos el like a la DB
+        // Actualizamos el contenido con los nuevos likes en la db
 
     }
 
@@ -109,11 +109,11 @@ public class Contenido implements Serializable {
         this.idCreador = idCreador;
     }
 
-    public int getVisualizaciones() {
+    public ArrayList<Visualizacion> getVisualizaciones() {
         return visualizaciones;
     }
 
-    public void setVisualizaciones(int visualizaciones) {
+    public void setVisualizaciones(ArrayList<Visualizacion> visualizaciones) {
         this.visualizaciones = visualizaciones;
     }
 

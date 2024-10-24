@@ -4,28 +4,20 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
-import java.io.Serializable;
-
 /**
  *
  * @author carlo
  */
-public class Like implements Serializable{
+public class Visualizacion {
+    
     private String idUsuario;
     private String idContenido;
+    
+    
 
-    public Like() {
-    }
-
-    public Like(String idUsuario, String idContenido) {
+    public Visualizacion(String idUsuario, String idContenido) {
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
-    }
-    
-    // To string
-    @Override
-    public String toString() {
-        return "Like{" + "idUsuario=" + idUsuario + ", idContenido=" + idContenido + '}';
     }
 
     public String getIdUsuario() {
@@ -42,6 +34,11 @@ public class Like implements Serializable{
 
     public void setIdContenido(String idContenido) {
         this.idContenido = idContenido;
+    }
+
+    @Override
+    public String toString() {
+        return "Visualizacion{" + "idUsuario=" + idUsuario + ", idContenido=" + idContenido + '}';
     }
     
 }

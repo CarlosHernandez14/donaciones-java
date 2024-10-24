@@ -4,7 +4,14 @@
  */
 package com.mycompany.donacionesprueba.vistas.influencer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+
+import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
+import com.mycompany.donacionesprueba.dao.Dao;
 
 /**
  *
@@ -27,6 +34,41 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         this.influencer = influencer;
         
         System.out.println("Creador: " + this.influencer);
+
+        
+        // Seteamos el nombre del usuario en el btnProfile
+        this.btnProfile.setText(this.influencer.getNombre());
+        // Seteamos un box layout para el panel de posts
+        this.containerPosts.setLayout(new BoxLayout(containerPosts, BoxLayout.Y_AXIS));
+        
+        initData();
+
+    }
+
+    public void initData(){
+        
+        this.containerPosts.removeAll();
+
+        // Cargar publicaciones del influencer
+        List<Contenido> contenidos = Dao.obtenerContenidos();
+
+        // Vamos agregando PanelContenido a containerPosts
+        for (Contenido contenido : contenidos) {
+            PanelContenido panelContenido = new PanelContenido(contenido, influencer);
+            // Seteamos el size del panel para que se ajuste al tamaño del container
+            panelContenido.setMaximumSize(panelContenido.getPreferredSize());
+            panelContenido.setPreferredSize(panelContenido.getPreferredSize());
+            this.containerPosts.add(panelContenido);
+        }
+
+        this.containerPosts.revalidate();
+        this.containerPosts.repaint();
+
+    }
+    
+    public void actualizarDatos(){
+        //Refrescamos los datos de las publicaciones
+        this.initData();
     }
 
     /**
@@ -52,6 +94,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         btnAddContent = new org.edisoncor.gui.button.ButtonRound();
         jPanel2 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
         containerPosts = new javax.swing.JPanel();
 
         buttonIcon1.setText("buttonIcon1");
@@ -59,6 +102,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         buttonIpod1.setText("buttonIpod1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         containerView.setBackground(new java.awt.Color(255, 255, 255));
         containerView.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,6 +214,8 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
 
+        jScrollPane1.setBorder(null);
+
         containerPosts.setBackground(new java.awt.Color(242, 242, 242));
 
         javax.swing.GroupLayout containerPostsLayout = new javax.swing.GroupLayout(containerPosts);
@@ -183,6 +229,8 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
             .addGap(0, 505, Short.MAX_VALUE)
         );
 
+        jScrollPane1.setViewportView(containerPosts);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,18 +238,22 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(containerPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(26, 26, 26)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addGap(26, 26, 26)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(containerPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 530, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addGap(24, 24, 24)))
         );
 
         panelPosts.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 95, 780, 540));
@@ -231,7 +283,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
     private void btnAddContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddContentActionPerformed
         
         // Abrimos ventana para crear post
-        new CreatePostForm(influencer).setVisible(true);
+        new CreatePostForm(influencer, this).setVisible(true);
         
         
     }//GEN-LAST:event_btnAddContentActionPerformed
@@ -284,6 +336,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel panelPosts;
     private javax.swing.JTabbedPane tabbedPane;
