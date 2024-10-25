@@ -5,6 +5,7 @@
 package com.mycompany.donacionesprueba.clases;
 
 import com.mycompany.donacionesprueba.dao.Dao;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class CreadorContenido extends Usuario implements Serializable {
 
     private ArrayList<Contenido> contenidos;
     private boolean cuentaBloqueada;
-    private ArrayList<Usuario> suscriptores;
+    private ArrayList<String> suscriptores; // Guarda el id de los usuarios suscritos
 
     public CreadorContenido(String idUsuario, String nombre, String email, String contrasena) {
         super(idUsuario, nombre, email, contrasena);
@@ -46,6 +47,26 @@ public class CreadorContenido extends Usuario implements Serializable {
             throw e;
         }
 
+    }
+
+    // Metodo para agregar suscriptores
+    public void agregarSuscriptor(String idUsuario) throws IOException {
+
+        // Agregar el id del usuario a la lista de suscriptores
+        this.suscriptores.add(idUsuario);
+
+        // Actualizamos los datos de CreadorContenido en la DB
+        Dao.actualizarCreadorContenido(this);
+    }
+
+    // Metodo para eliminar suscriptores
+    public void eliminarSuscriptor(String idUsuario) throws IOException {
+
+        // Eliminar el id del usuario de la lista de suscriptores
+        this.suscriptores.remove(idUsuario);
+
+        // Actualizamos los datos de CreadorContenido en la DB
+        Dao.actualizarCreadorContenido(this);
     }
 
     public void verificarActividad() {
@@ -86,11 +107,11 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.cuentaBloqueada = cuentaBloqueada;
     }
 
-    public ArrayList<Usuario> getSuscriptores() {
+    public ArrayList<String> getSuscriptores() {
         return suscriptores;
     }
 
-    public void setSuscriptores(ArrayList<Usuario> suscriptores) {
+    public void setSuscriptores(ArrayList<String> suscriptores) {
         this.suscriptores = suscriptores;
     }
 

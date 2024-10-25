@@ -4,6 +4,8 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
+import com.mycompany.donacionesprueba.dao.Dao;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,8 @@ public class Contenido implements Serializable {
     }
 
     // Constructor para cargar contenido desde la DB
-    public Contenido(String id, String titulo, String descripcion, String idCreador, ArrayList<Visualizacion> visualizaciones,
+    public Contenido(String id, String titulo, String descripcion, String idCreador,
+            ArrayList<Visualizacion> visualizaciones,
             ArrayList<Like> likes, List<String> comentarios, double donaciones, String imagePath) {
         this.id = id;
         this.titulo = titulo;
@@ -49,16 +52,42 @@ public class Contenido implements Serializable {
         comentarios.add(usuario.getNombre() + ": " + comentario);
     }
 
-    public void agregarLike(String idUsuario, String idContenido) {
+    public void agregarLike(String idUsuario, String idContenido) throws IOException {
         Like like = new Like(idUsuario, idContenido);
         likes.add(like);
 
         // Actualizamos el contenido con los nuevos likes en la db
 
+        Dao.actualizarContenido(this);
     }
 
-    public void recibirDonacion(Usuario usuario, double cantidad) {
+    // Metdodo para eliminar un like
+    public void eliminarLike(String idUsuario, String idContenido) throws IOException {
+        for (Like like : likes) {
+            if (like.getIdUsuario().equals(idUsuario) && like.getIdContenido().equals(idContenido)) {
+                likes.remove(like);
+                break;
+            }
+        }
+
+        // Actualizamos el contenido con los likes eliminados en la db
+        Dao.actualizarContenido(this);
+    }
+
+    // Metodo para agrear una visualizacion
+    public void agregarVisualizacion(String idUsuario) throws IOException {
+        Visualizacion visualizacion = new Visualizacion(idUsuario, this.id);
+        visualizaciones.add(visualizacion);
+
+        // Actualizamos el contenido con las nuevas visualizaciones en la db
+        Dao.actualizarContenido(this);
+    }
+
+    public void recibirDonacion(double cantidad) throws IOException {
         donaciones += cantidad;
+
+        // Actualizamos el contenido con la nueva cantidad de donaciones en la db
+        Dao.actualizarContenido(this);
     }
 
     // Metodo para generar un id unico para el contenido que incluya letras y
@@ -75,7 +104,6 @@ public class Contenido implements Serializable {
     }
 
     // Getters y setters
-    
 
     public String getId() {
         return id;

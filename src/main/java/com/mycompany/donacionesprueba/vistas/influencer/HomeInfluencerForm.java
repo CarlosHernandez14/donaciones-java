@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.vistas.Login;
 
 /**
  *
@@ -82,6 +83,8 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
 
         buttonIcon1 = new org.edisoncor.gui.button.ButtonIcon();
         buttonIpod1 = new org.edisoncor.gui.button.ButtonIpod();
+        popupMenuProfile = new javax.swing.JPopupMenu();
+        itemCerrarSesion = new javax.swing.JMenuItem();
         containerView = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btnProfile = new javax.swing.JButton();
@@ -100,6 +103,19 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         buttonIcon1.setText("buttonIcon1");
 
         buttonIpod1.setText("buttonIpod1");
+
+        itemCerrarSesion.setText("Cerrar sesion");
+        itemCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemCerrarSesionMouseClicked(evt);
+            }
+        });
+        itemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCerrarSesionActionPerformed(evt);
+            }
+        });
+        popupMenuProfile.add(itemCerrarSesion);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -278,6 +294,9 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
         // TODO add your handling code here:
+        //Abrimos el popup menu de lado derecho arriba
+        this.popupMenuProfile.show(btnProfile, this.btnProfile.getWidth(), 0);
+        
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void btnAddContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddContentActionPerformed
@@ -287,6 +306,24 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnAddContentActionPerformed
+
+    private void itemCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCerrarSesionMouseClicked
+        // TODO add your handling code here:
+        
+        // Abrimos
+        new Login().setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_itemCerrarSesionMouseClicked
+
+    private void itemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        
+        // Abrimos
+        new Login().setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_itemCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,12 +370,14 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
     private javax.swing.JPanel containerPosts;
     private javax.swing.JPanel containerView;
     private org.edisoncor.gui.textField.TextFieldRound fieldSearchBar;
+    private javax.swing.JMenuItem itemCerrarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel panelPosts;
+    private javax.swing.JPopupMenu popupMenuProfile;
     private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 }

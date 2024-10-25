@@ -107,6 +107,26 @@ public class Dao {
         }
     }
 
+    // Metodo para obtener un creador de contenido por id
+    public static CreadorContenido obtenerCreadorContenido(String id) {
+        // Buscamos el creador de contenido por id
+        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+                new TypeToken<List<CreadorContenido>>() {
+                });
+        // Cargamos los creadores de contenido actuales
+        List<CreadorContenido> creadoresContenido = creadorContenidoDao.cargar();
+
+        // Buscamos el creador de contenido por id
+        for (CreadorContenido creadorContenido : creadoresContenido) {
+            // Si encontramos el creador de contenido lo retornamos
+            if (creadorContenido.getId().equals(id)) {
+                return creadorContenido;
+            }
+        }
+
+        return null;
+    }
+
     // Metodo para actualizar creador de contenido
     public static void actualizarCreadorContenido(CreadorContenido creadorContenido) throws IOException {
         try {
@@ -168,13 +188,13 @@ public class Dao {
             });
             // Cargamos los contenidos actuales
             List<Contenido> contenidos = contenidoDao.cargar();
-            
+
             // Guardamos el contenido
             contenidos.add(contenido);
 
             contenidoDao.guardar(contenidos);
-            
-            //System.out.println("Se guardo el contenido");
+
+            // System.out.println("Se guardo el contenido");
         } catch (IOException ex) {
             ex.printStackTrace();
             // Imprimimos el error
@@ -214,6 +234,32 @@ public class Dao {
             System.out.println("Error al actualizar el contenido");
             // Arrojamos una excepción
             throw new IOException("Error al actualizar el contenido");
+        }
+    }
+
+    // Metodo para eliminar contenido
+    public static void eliminarContenido(String idContenido) throws IOException {
+        try {
+            // Leemos los contenidos actuales del archivo json
+            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            });
+            // Cargamos los contenidos actuales
+            List<Contenido> contenidos = contenidoDao.cargar();
+
+            // Buscamos el contenido a eliminar
+            for (int i = 0; i < contenidos.size(); i++) {
+                if (contenidos.get(i).getId().equals(idContenido)) {
+                    contenidos.remove(i);
+                    break;
+                }
+            }
+
+            contenidoDao.guardar(contenidos);
+        } catch (IOException ex) {
+            // Imprimimos el error
+            System.out.println("Error al eliminar el contenido");
+            // Arrojamos una excepción
+            throw new IOException("Error al eliminar el contenido");
         }
     }
 

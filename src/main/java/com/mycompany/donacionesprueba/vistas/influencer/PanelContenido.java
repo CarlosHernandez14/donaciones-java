@@ -4,32 +4,41 @@
  */
 package com.mycompany.donacionesprueba.vistas.influencer;
 
+import com.mycompany.donacionesprueba.clases.Administrador;
 import com.mycompany.donacionesprueba.clases.Contenido;
+import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Like;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.clases.Visualizacion;
+import com.mycompany.donacionesprueba.dao.Dao;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author carlo
  */
 public class PanelContenido extends javax.swing.JPanel {
-    
+
     private Usuario usuario;
     private Contenido contenido;
-    
+    private CreadorContenido creador;
+
     /**
      * Creates new form PanelContenido
      */
     public PanelContenido() {
         initComponents();
     }
-    
+
     public PanelContenido(Contenido contenido, Usuario usuario) {
         initComponents();
         this.usuario = usuario;
         this.contenido = contenido;
-        
+
         // Inicializar data
         btnProfile.setText(usuario.getNombre());
         labelTitulo.setText(contenido.getTitulo());
@@ -40,7 +49,6 @@ public class PanelContenido extends javax.swing.JPanel {
         // if (usuario.getId().equals(contenido.getIdCreador())) {
         //     btnSuscribe.setVisible(false);
         // }
-
         // Si el usuario ya ha dado like, cambiamos el icono por el de likeado
         if (usuario != null) {
             for (Like like : contenido.getLikes()) {
@@ -55,11 +63,47 @@ public class PanelContenido extends javax.swing.JPanel {
                     this.btnVer.setVisible(false);
                 }
             }
-            
+
             // Mostramos la cantida de comentarios
             btnComentar.setText("Comentarios (" + contenido.getComentarios().size() + ")");
+
+            // Verificamos si el usuario esta suscrito al creador del contenido
+            // Obtenemos al creador del contenido
+            this.creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
+
+            // Verificamos si el usuario esta suscrito al creador
+
+            // Si el usuario esta suscrito al creador, cambiamos el texto del boton de suscribirse
+            if (creador.getSuscriptores().contains(usuario.getId())) {
+                btnSuscribe.setText("Desuscribirse");
+            } else {
+                btnSuscribe.setText("Suscribirse");
+            }
+            
+            // Si el contenido no es del usuario o es un usuario 
+            //comun eliminamos btn de options
+
+            if (this.usuario instanceof CreadorContenido) {
+                // Si el contenido es suyo se muestra si no no
+                if (!this.usuario.getId().equals(contenido.getIdCreador())) {
+                    this.btnOptions.setVisible(false);
+                }
+            } else if (this.usuario instanceof Administrador) {
+                // Se muestra el boton de opciones
+                this.btnOptions.setVisible(true);
+            } else {
+                // Si es usuario comun ocultamos boton
+                this.btnOptions.setVisible(false);
+            }
+
+            // Verificamos si el usuario ya vio el contenido
+            for (Visualizacion visualizacion : contenido.getVisualizaciones()) {
+                if (visualizacion.getIdUsuario().equals(usuario.getId())) {
+                    this.btnVer.setVisible(false);
+                }
+            }
         }
-        
+
     }
 
     /**
@@ -71,6 +115,8 @@ public class PanelContenido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuOpciones = new javax.swing.JPopupMenu();
+        itemEliminar = new javax.swing.JMenuItem();
         panelHeader = new javax.swing.JPanel();
         btnProfile = new javax.swing.JButton();
         btnOptions = new javax.swing.JButton();
@@ -84,6 +130,14 @@ public class PanelContenido extends javax.swing.JPanel {
         btnDonar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         btnComentar = new javax.swing.JButton();
+
+        itemEliminar.setText("Eliminar contenido");
+        itemEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarActionPerformed(evt);
+            }
+        });
+        menuOpciones.add(itemEliminar);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new org.edisoncor.gui.util.DropShadowBorder());
@@ -109,6 +163,11 @@ public class PanelContenido extends javax.swing.JPanel {
         btnOptions.setForeground(new java.awt.Color(0, 0, 0));
         btnOptions.setText("...");
         btnOptions.setBorderPainted(false);
+        btnOptions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOptionsActionPerformed(evt);
+            }
+        });
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(51, 51, 51));
@@ -119,21 +178,25 @@ public class PanelContenido extends javax.swing.JPanel {
         btnSuscribe.setForeground(new java.awt.Color(255, 255, 255));
         btnSuscribe.setText("Suscribirse");
         btnSuscribe.setBorderPainted(false);
+        btnSuscribe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuscribeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
-                .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSuscribe)
-                .addGap(147, 147, 147)
-                .addComponent(btnOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-            .addGroup(panelHeaderLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelHeaderLayout.createSequentialGroup()
+                        .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSuscribe)
+                        .addGap(162, 162, 162)
+                        .addComponent(btnOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelHeaderLayout.setVerticalGroup(
@@ -175,17 +238,32 @@ public class PanelContenido extends javax.swing.JPanel {
         btnLike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-nolikeado.png"))); // NOI18N
         btnLike.setText("Like");
         btnLike.setBorderPainted(false);
+        btnLike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLikeActionPerformed(evt);
+            }
+        });
 
         btnDonar.setBackground(new java.awt.Color(255, 255, 255));
         btnDonar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDonar.setForeground(new java.awt.Color(255, 102, 0));
         btnDonar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-donar.png"))); // NOI18N
         btnDonar.setText("Donar");
+        btnDonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDonarActionPerformed(evt);
+            }
+        });
 
         btnVer.setBackground(new java.awt.Color(255, 255, 255));
         btnVer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnVer.setForeground(new java.awt.Color(255, 102, 0));
         btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
 
         btnComentar.setBackground(new java.awt.Color(255, 255, 255));
         btnComentar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -249,7 +327,7 @@ public class PanelContenido extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelContainerContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 467, Short.MAX_VALUE)))
+                    .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,6 +343,121 @@ public class PanelContenido extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProfileActionPerformed
 
+    private void btnLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLikeActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            // Si el contenido ya tiene un like del usuario, lo eliminamos
+            for (Like like : contenido.getLikes()) {
+                if (like.getIdUsuario().equals(usuario.getId())) {
+                    // Eliminamos el like del contenido
+                    this.contenido.eliminarLike(this.usuario.getId(), this.contenido.getId());
+                    // Cambiamos el icono
+                    btnLike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-nolikeado.png")));
+                    return;
+                }
+            }
+
+            // Si no tiene like, lo agregamos
+            // Agregamos el lke al contenido
+            this.contenido.agregarLike(this.usuario.getId(), this.contenido.getId());
+
+            // Si todo salio bien al darle like cambiamos el icono
+            btnLike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-like.png")));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar el like");
+        }
+    }//GEN-LAST:event_btnLikeActionPerformed
+
+    private void btnSuscribeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuscribeActionPerformed
+        // TODO add your handling code here:
+
+        //Obtenemos el  texto del button
+        String textButton = this.btnSuscribe.getText();
+        try {
+            if (textButton.equals("Suscribirse")) {
+                // Suscribimos al usuario
+                this.creador.agregarSuscriptor(this.usuario.getId());
+                
+                // Si todo sale bien cambiamos el texto del button
+                this.btnSuscribe.setText("Desuscribirse");
+            } else if (textButton.equals("Desuscribirse")) {
+                // Eliminamos la suscripcion
+                this.creador.eliminarSuscriptor(this.usuario.getId());
+                
+                // Si tood sale bien cambiamos el texto
+                this.btnSuscribe.setText("Suscribirse");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo guardar la suscripcion, intentalo mas tarde");
+        }
+        
+
+    }//GEN-LAST:event_btnSuscribeActionPerformed
+
+    private void btnOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionsActionPerformed
+        // TODO add your handling code here:
+        
+        this.menuOpciones.show(this.btnOptions, 0, this.btnOptions.getHeight());
+    }//GEN-LAST:event_btnOptionsActionPerformed
+
+    private void itemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            // Eliminamos el contenido
+            Dao.eliminarContenido(this.contenido.getId());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el contenido");
+        }
+    }//GEN-LAST:event_itemEliminarActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            //Agregamos la visualizacion
+            this.contenido.agregarVisualizacion(this.usuario.getId());
+            
+            // Escondemos el btn una vez visto
+            this.btnVer.setVisible(false);
+        } catch (IOException ex) {
+            
+            ex.printStackTrace();
+            
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la visualizacion");
+        }
+        
+    }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnDonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonarActionPerformed
+        // TODO add your handling code here:
+        
+        //Agregamos una donacion
+        double monto = 0;
+        try {
+            monto = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el monto a donar"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Monto invalido");
+            return;
+        }
+        
+        try {
+            // Si el monto ese valido agregamos la donacion
+            this.contenido.recibirDonacion(monto);
+            
+            JOptionPane.showMessageDialog(null, "Donacion enviada con exito ;D");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo enviar la donacio, intentalo mas tarde");
+        }
+        
+    }//GEN-LAST:event_btnDonarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComentar;
@@ -274,9 +467,11 @@ public class PanelContenido extends javax.swing.JPanel {
     private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnSuscribe;
     private javax.swing.JButton btnVer;
+    private javax.swing.JMenuItem itemEliminar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JPopupMenu menuOpciones;
     private javax.swing.JPanel panelContainerContent;
     private javax.swing.JPanel panelHeader;
     private org.edisoncor.gui.panel.PanelImage panelImage;
