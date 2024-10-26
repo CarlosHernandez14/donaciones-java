@@ -297,7 +297,7 @@ public class Login extends javax.swing.JFrame {
                 
             } else if (usuario instanceof Usuario) {
                 // Abrimos la ventana Home Form
-                new HomeForm().setVisible(true);
+                new HomeForm(usuario).setVisible(true);
                 // Cerramos ventana
                 this.dispose();
             }

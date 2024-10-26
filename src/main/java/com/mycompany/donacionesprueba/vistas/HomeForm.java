@@ -4,7 +4,12 @@
  */
 package com.mycompany.donacionesprueba.vistas;
 
+import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
+import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.vistas.influencer.PanelContenido;
+import java.util.List;
+import javax.swing.BoxLayout;
 
 /**
  *
@@ -18,12 +23,41 @@ public class HomeForm extends javax.swing.JFrame {
      */
     public HomeForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public HomeForm(Usuario usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
+        
+        // Seteamos el nombre del usuario en el btnProfile
+        this.btnProfile.setText(this.usuario.getNombre());
+        // Seteamos un box layout para el panel de posts
+        this.containerPostsScroll.setLayout(new BoxLayout(containerPostsScroll, BoxLayout.Y_AXIS));
+        
+        initData();
+    }
+    
+    public void initData(){
+        
+        this.containerPostsScroll.removeAll();
+
+        // Cargar publicaciones del influencer
+        List<Contenido> contenidos = Dao.obtenerContenidos();
+
+        // Vamos agregando PanelContenido a containerPosts
+        for (Contenido contenido : contenidos) {
+            PanelContenido panelContenido = new PanelContenido(contenido, usuario);
+            // Seteamos el size del panel para que se ajuste al tamaño del container
+            panelContenido.setMaximumSize(panelContenido.getPreferredSize());
+            panelContenido.setPreferredSize(panelContenido.getPreferredSize());
+            this.containerPostsScroll.add(panelContenido);
+        }
+
+        this.containerPostsScroll.revalidate();
+        this.containerPostsScroll.repaint();
+
     }
 
 
@@ -36,6 +70,8 @@ public class HomeForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenuProfile = new javax.swing.JPopupMenu();
+        itemCerrarSesion = new javax.swing.JMenuItem();
         containerView = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btnProfile = new javax.swing.JButton();
@@ -47,7 +83,21 @@ public class HomeForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        containerPosts = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        containerPostsScroll = new javax.swing.JPanel();
+
+        itemCerrarSesion.setText("Cerrar sesion");
+        itemCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemCerrarSesionMouseClicked(evt);
+            }
+        });
+        itemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCerrarSesionActionPerformed(evt);
+            }
+        });
+        popupMenuProfile.add(itemCerrarSesion);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,18 +200,22 @@ public class HomeForm extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
 
-        containerPosts.setBackground(new java.awt.Color(242, 242, 242));
+        jScrollPane7.setBorder(null);
 
-        javax.swing.GroupLayout containerPostsLayout = new javax.swing.GroupLayout(containerPosts);
-        containerPosts.setLayout(containerPostsLayout);
-        containerPostsLayout.setHorizontalGroup(
-            containerPostsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        containerPostsScroll.setBackground(new java.awt.Color(242, 242, 242));
+
+        javax.swing.GroupLayout containerPostsScrollLayout = new javax.swing.GroupLayout(containerPostsScroll);
+        containerPostsScroll.setLayout(containerPostsScrollLayout);
+        containerPostsScrollLayout.setHorizontalGroup(
+            containerPostsScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 746, Short.MAX_VALUE)
         );
-        containerPostsLayout.setVerticalGroup(
-            containerPostsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        containerPostsScrollLayout.setVerticalGroup(
+            containerPostsScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 505, Short.MAX_VALUE)
         );
+
+        jScrollPane7.setViewportView(containerPostsScroll);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -170,18 +224,22 @@ public class HomeForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(containerPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(26, 26, 26)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addGap(26, 26, 26)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(containerPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 530, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addGap(24, 24, 24)))
         );
 
         panelPosts.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 95, 780, 540));
@@ -206,7 +264,27 @@ public class HomeForm extends javax.swing.JFrame {
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
         // TODO add your handling code here:
+        //Abrimos el popup menu de lado derecho arriba
+        this.popupMenuProfile.show(btnProfile, this.btnProfile.getWidth(), 0);
     }//GEN-LAST:event_btnProfileActionPerformed
+
+    private void itemCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCerrarSesionMouseClicked
+        // TODO add your handling code here:
+
+        // Abrimos
+        new Login().setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_itemCerrarSesionMouseClicked
+
+    private void itemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCerrarSesionActionPerformed
+        // TODO add your handling code here:
+
+        // Abrimos
+        new Login().setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_itemCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,13 +327,28 @@ public class HomeForm extends javax.swing.JFrame {
     private javax.swing.JButton btnProfile;
     private javax.swing.JPanel containerHeader;
     private javax.swing.JPanel containerPosts;
+    private javax.swing.JPanel containerPosts1;
+    private javax.swing.JPanel containerPosts2;
+    private javax.swing.JPanel containerPosts3;
+    private javax.swing.JPanel containerPosts4;
+    private javax.swing.JPanel containerPosts5;
+    private javax.swing.JPanel containerPostsScroll;
     private javax.swing.JPanel containerView;
+    private javax.swing.JMenuItem itemCerrarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel panelPosts;
+    private javax.swing.JPopupMenu popupMenuProfile;
     private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 }
