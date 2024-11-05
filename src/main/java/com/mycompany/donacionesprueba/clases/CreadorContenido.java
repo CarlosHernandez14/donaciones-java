@@ -18,6 +18,7 @@ public class CreadorContenido extends Usuario implements Serializable {
     private ArrayList<Contenido> contenidos;
     private boolean cuentaBloqueada;
     private ArrayList<String> suscriptores; // Guarda el id de los usuarios suscritos
+    private boolean partner;
 
     public CreadorContenido(String idUsuario, String nombre, String email, String contrasena) {
         super(idUsuario, nombre, email, contrasena);
@@ -89,6 +90,16 @@ public class CreadorContenido extends Usuario implements Serializable {
         }
         return totalLikes / contenidos.size();
     }
+    
+    // Método para calcular el total de donaciones de todos los contenidos del creador
+    public double getTotalDonaciones() {
+        // Se convierte la lista de contenidos en un flujo (Stream)
+        return contenidos.stream()
+            // Se mapea cada contenido a su cantidad de donaciones
+            .mapToDouble(Contenido::getDonaciones)
+            // Se suma todas las donaciones obtenidas del flujo
+            .sum();
+    }
 
     // Getters y setters
     public ArrayList<Contenido> getContenidos() {
@@ -114,6 +125,14 @@ public class CreadorContenido extends Usuario implements Serializable {
     public void setSuscriptores(ArrayList<String> suscriptores) {
         this.suscriptores = suscriptores;
     }
+    
+    public boolean isPartner() {
+        return partner;
+    }
+
+    public void setPartner(boolean partner) {
+        this.partner = partner;
+    }
 
     @Override
     public String toString() {
@@ -121,5 +140,5 @@ public class CreadorContenido extends Usuario implements Serializable {
                 + cuentaBloqueada
                 + ", suscriptores=" + suscriptores + '}';
     }
-
+    
 }
