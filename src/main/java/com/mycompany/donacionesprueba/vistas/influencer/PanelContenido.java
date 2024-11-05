@@ -11,6 +11,7 @@ import com.mycompany.donacionesprueba.clases.Like;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.clases.Visualizacion;
 import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.vistas.admin.HomeAdminForm;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,6 +27,10 @@ public class PanelContenido extends javax.swing.JPanel {
     private Usuario usuario;
     private Contenido contenido;
     private CreadorContenido creador;
+    
+    // Forms para actualizar data
+    private HomeInfluencerForm homeInfluecerForm;
+    private HomeAdminForm homeAdminForm;
 
     /**
      * Creates new form PanelContenido
@@ -34,10 +39,13 @@ public class PanelContenido extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PanelContenido(Contenido contenido, Usuario usuario) {
+    public PanelContenido(Contenido contenido, Usuario usuario, HomeInfluencerForm homeInfluencerForm, HomeAdminForm homeAdminForm) {
         initComponents();
         this.usuario = usuario;
         this.contenido = contenido;
+        
+        this.homeInfluecerForm = homeInfluencerForm;
+        this.homeAdminForm = homeAdminForm;
 
         // Inicializar data
         btnProfile.setText(usuario.getNombre());
@@ -410,6 +418,14 @@ public class PanelContenido extends javax.swing.JPanel {
             
             // Eliminamos el contenido
             Dao.eliminarContenido(this.contenido.getId());
+            
+            
+            // Actualizamos la UI de HomeInfluencer o Admin
+            if (this.homeInfluecerForm != null) {
+                this.homeInfluecerForm.actualizarDatos();
+            } else if(this.homeAdminForm != null) {
+                this.homeAdminForm.LoadContent();
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             

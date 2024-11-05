@@ -11,8 +11,8 @@ import java.io.Serializable;
  * @author carlo
  */
 public class Administrador extends Usuario implements Serializable {
-    public Administrador(String nombre, String email, String contrasena) {
-        super(nombre, email, contrasena);
+    public Administrador(String id, String nombre, String email, String contrasena) {
+        super(id, nombre, email, contrasena);
     }
 
     public void eliminarContenido(Contenido contenido) {

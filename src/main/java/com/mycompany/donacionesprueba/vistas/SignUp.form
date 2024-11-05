@@ -344,9 +344,10 @@
             <Component class="javax.swing.JComboBox" name="comboTypeUser">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
+                  <StringArray count="3">
                     <StringItem index="0" value="Usuario"/>
                     <StringItem index="1" value="Creador de Contenido"/>
+                    <StringItem index="2" value="Administrador"/>
                   </StringArray>
                 </Property>
               </Properties>

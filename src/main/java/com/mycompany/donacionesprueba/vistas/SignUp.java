@@ -4,6 +4,7 @@
  */
 package com.mycompany.donacionesprueba.vistas;
 
+import com.mycompany.donacionesprueba.clases.Administrador;
 import javax.swing.JOptionPane;
 
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
@@ -142,7 +143,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel25.setForeground(new java.awt.Color(51, 51, 51));
         jLabel25.setText("Eres influencer?");
 
-        comboTypeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Creador de Contenido" }));
+        comboTypeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Creador de Contenido", "Administrador" }));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(51, 51, 51));
@@ -379,6 +380,11 @@ public class SignUp extends javax.swing.JFrame {
                         contrasena);
                 // Guardamos el creador de contenido
                 Dao.guardarCreadorContenido(creadorContenido);
+            } else if (tipoUsuario.equals("Administrador")){
+                // Creamos un admnistrador
+                Administrador admin = new Administrador(Usuario.generarId(), nombre, correo, contrasena);
+                // Guardamos al admin en la db
+                Dao.guardarAdministrador(admin);
             }
 
             // Si todo sale bien mostramos un mensaje de exito

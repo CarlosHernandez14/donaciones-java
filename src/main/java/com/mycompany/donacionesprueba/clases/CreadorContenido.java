@@ -8,6 +8,7 @@ import com.mycompany.donacionesprueba.dao.Dao;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -77,6 +78,35 @@ public class CreadorContenido extends Usuario implements Serializable {
         }
     }
 
+    // Metodo para obtener el total de donacione del creador segun sus contenidos
+    public Double obtenerTotalDonaciones() {
+        try {
+            // Obtenemos los contenidos del creador
+            List<Contenido> contenidos = Dao.obtenerContenidos();
+
+            List<Contenido> contenidosCreador = new ArrayList<>();
+
+            // Filtramos los contenidos del creador
+            for (Contenido contenido : contenidos) {
+                if (contenido.getIdCreador().equals(this.getId())) {
+                    contenidosCreador.add(contenido);
+                }
+            }
+
+            // Obtenemos el total de donaciones
+            double totalDonaciones = 0;
+            for (Contenido contenido : contenidosCreador) {
+                totalDonaciones += contenido.getDonaciones();
+            }
+
+            return totalDonaciones;
+
+        } catch (Exception e) {
+            System.out.println("Error al obtener el total de donaciones del creador: " + e.getMessage());
+            return 0.0;
+        }
+    }
+
     public boolean esPartner() {
         // Lógica para verificar si es un "partner"
         return (this.getSuscriptores().size() >= 1000 && calcularPromedioLikes() >= 500);
@@ -90,15 +120,16 @@ public class CreadorContenido extends Usuario implements Serializable {
         }
         return totalLikes / contenidos.size();
     }
-    
-    // Método para calcular el total de donaciones de todos los contenidos del creador
+
+    // Método para calcular el total de donaciones de todos los contenidos del
+    // creador
     public double getTotalDonaciones() {
         // Se convierte la lista de contenidos en un flujo (Stream)
         return contenidos.stream()
-            // Se mapea cada contenido a su cantidad de donaciones
-            .mapToDouble(Contenido::getDonaciones)
-            // Se suma todas las donaciones obtenidas del flujo
-            .sum();
+                // Se mapea cada contenido a su cantidad de donaciones
+                .mapToDouble(Contenido::getDonaciones)
+                // Se suma todas las donaciones obtenidas del flujo
+                .sum();
     }
 
     // Getters y setters
@@ -125,7 +156,7 @@ public class CreadorContenido extends Usuario implements Serializable {
     public void setSuscriptores(ArrayList<String> suscriptores) {
         this.suscriptores = suscriptores;
     }
-    
+
     public boolean isPartner() {
         return partner;
     }
@@ -140,5 +171,5 @@ public class CreadorContenido extends Usuario implements Serializable {
                 + cuentaBloqueada
                 + ", suscriptores=" + suscriptores + '}';
     }
-    
+
 }

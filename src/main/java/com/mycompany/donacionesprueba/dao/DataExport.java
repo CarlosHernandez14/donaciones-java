@@ -107,22 +107,22 @@ public class DataExport {
                     cell.setCellValue(encabezados[i]);
                 }
 
-                // Calcular las donaciones totales por cada creador
-                List<CreadorContenido> topCreadores = creadores.stream()
-                        .sorted((a, b) -> Double.compare(b.getTotalDonaciones(), a.getTotalDonaciones()))
-                        .limit(10)
-                        .collect(Collectors.toList());
+//                // Calcular las donaciones totales por cada creador
+//                List<CreadorContenido> topCreadores = creadores.stream()
+//                        .sorted((a, b) -> Double.compare(b.getTotalDonaciones(), a.getTotalDonaciones()))
+//                        .limit(10)
+//                        .collect(Collectors.toList());
 
                 // Agregar los datos de los creadores
                 int rowIdx = 1;
                 int posicion = 1;
-                for (CreadorContenido creador : topCreadores) {
+                for (CreadorContenido creador : creadores) {
                     Row row = sheet.createRow(rowIdx++);
 
                     row.createCell(0).setCellValue(posicion++);
                     row.createCell(1).setCellValue(creador.getNombre());
                     row.createCell(2).setCellValue(creador.getCorreo());
-                    row.createCell(3).setCellValue(creador.getTotalDonaciones());
+                    row.createCell(3).setCellValue(creador.obtenerTotalDonaciones());
                 }
 
                 // Escribir el archivo en la ubicación seleccionada

@@ -4,17 +4,45 @@
  */
 package com.mycompany.donacionesprueba.vistas.admin;
 
+import com.mycompany.donacionesprueba.clases.Administrador;
+import com.mycompany.donacionesprueba.clases.Contenido;
+import com.mycompany.donacionesprueba.clases.CreadorContenido;
+import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.DataExport;
+import com.mycompany.donacionesprueba.vistas.Login;
+import com.mycompany.donacionesprueba.vistas.influencer.PanelContenido;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author carlo
  */
 public class HomeAdminForm extends javax.swing.JFrame {
 
+    private Administrador admin;
+
     /**
      * Creates new form HomeAdminForm
      */
     public HomeAdminForm() {
         initComponents();
+    }
+
+    public HomeAdminForm(Administrador admin) {
+        initComponents();
+        this.admin = admin;
+        this.setLocationRelativeTo(null);
+
+        // Seteamos el nombre del usuario en el btnProfile
+        this.btnProfile.setText(this.admin.getNombre());
+        // Seteamos un box layout para el panel de posts
+        this.containerPosts.setLayout(new BoxLayout(this.containerPosts, BoxLayout.Y_AXIS));
+
+        // Cargamos los contenidos por defecto
+        LoadContent();
     }
 
     /**
@@ -26,21 +54,375 @@ public class HomeAdminForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        itemLogout = new javax.swing.JMenuItem();
+        containerView = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        btnProfile = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnPosts = new javax.swing.JButton();
+        btnUsers = new javax.swing.JButton();
+        tabbedPane = new javax.swing.JTabbedPane();
+        panelPosts = new javax.swing.JPanel();
+        containerHeader = new javax.swing.JPanel();
+        btnPDF = new org.edisoncor.gui.button.ButtonRound();
+        btnExcel = new org.edisoncor.gui.button.ButtonRound();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        containerPosts = new javax.swing.JPanel();
+
+        itemLogout.setText("Cerrar sesion");
+        itemLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLogoutActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(itemLogout);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        containerView.setBackground(new java.awt.Color(255, 255, 255));
+        containerView.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(255, 134, 94));
+
+        btnProfile.setBackground(new java.awt.Color(255, 134, 94));
+        btnProfile.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnProfile.setForeground(new java.awt.Color(255, 255, 255));
+        btnProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-usuario.png"))); // NOI18N
+        btnProfile.setText("Nombre usuario");
+        btnProfile.setBorder(null);
+        btnProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfileActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Gotham Medium", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Instafluencers");
+
+        btnPosts.setBackground(new java.awt.Color(255, 134, 94));
+        btnPosts.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPosts.setForeground(new java.awt.Color(255, 255, 255));
+        btnPosts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-publicaciones.png"))); // NOI18N
+        btnPosts.setText("Publicaciones");
+        btnPosts.setBorder(null);
+        btnPosts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPosts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostsActionPerformed(evt);
+            }
+        });
+
+        btnUsers.setBackground(new java.awt.Color(255, 134, 94));
+        btnUsers.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnUsers.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-usuario.png"))); // NOI18N
+        btnUsers.setText("Usuarios");
+        btnUsers.setBorder(null);
+        btnUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsersActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(btnPosts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btnPosts, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
+                .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        containerView.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 630));
+
+        tabbedPane.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelPosts.setBackground(new java.awt.Color(255, 255, 255));
+        panelPosts.setForeground(new java.awt.Color(153, 153, 153));
+        panelPosts.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        containerHeader.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnPDF.setBackground(new java.awt.Color(255, 102, 51));
+        btnPDF.setText("Exportar PDF");
+        btnPDF.setColorDeSombra(new java.awt.Color(255, 102, 0));
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
+
+        btnExcel.setBackground(new java.awt.Color(255, 102, 51));
+        btnExcel.setText("Exportar EXCEL");
+        btnExcel.setColorDeSombra(new java.awt.Color(255, 102, 0));
+        btnExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcelActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Usuarios con mas donaciones");
+
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Ficha Tecnica de los partners");
+
+        javax.swing.GroupLayout containerHeaderLayout = new javax.swing.GroupLayout(containerHeader);
+        containerHeader.setLayout(containerHeaderLayout);
+        containerHeaderLayout.setHorizontalGroup(
+            containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerHeaderLayout.createSequentialGroup()
+                .addContainerGap(356, Short.MAX_VALUE)
+                .addGroup(containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPDF, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
+        );
+        containerHeaderLayout.setVerticalGroup(
+            containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerHeaderLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
+        );
+
+        panelPosts.add(containerHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(242, 242, 242));
+
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
+
+        jScrollPane1.setBorder(null);
+
+        containerPosts.setBackground(new java.awt.Color(242, 242, 242));
+
+        javax.swing.GroupLayout containerPostsLayout = new javax.swing.GroupLayout(containerPosts);
+        containerPosts.setLayout(containerPostsLayout);
+        containerPostsLayout.setHorizontalGroup(
+            containerPostsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 746, Short.MAX_VALUE)
+        );
+        containerPostsLayout.setVerticalGroup(
+            containerPostsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 505, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(containerPosts);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(26, 26, 26)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addGap(26, 26, 26)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 530, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addGap(24, 24, 24)))
+        );
+
+        panelPosts.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 95, 780, 540));
+
+        tabbedPane.addTab("Posts", panelPosts);
+
+        containerView.add(tabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, -40, 780, 670));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addComponent(containerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
+            .addComponent(containerView, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
+        // TODO add your handling code here:
+
+        // Abrimos el popup menu de cerrar sesion
+        this.jPopupMenu1.show(this.btnProfile, this.btnProfile.getWidth(), 0);
+
+    }//GEN-LAST:event_btnProfileActionPerformed
+
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+
+        try {
+            // Obtenemos todos los creadores
+            List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            
+            List<CreadorContenido> partners = new ArrayList<>();
+            // Filtramos los que son partners
+            for (CreadorContenido creador : creadores) {
+                if (creador.isPartner()) {
+                    partners.add(creador);
+                }
+            }
+            
+            // Guardamos el pdf de la ficha tecnica de los partners
+            DataExport.generarReportePDF(partners);
+             
+        } catch (Exception e) {
+            System.out.println("Erro al generar el reporte: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al generar el reporte");
+        }
+
+    }//GEN-LAST:event_btnPDFActionPerformed
+
+    private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            // Obtenemos todos los creadores
+            List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            
+            List<CreadorContenido> topCreadores = new ArrayList<>();
+            
+            // Filtramos los primeros 10 usuarios con mas donaciones
+            creadores.sort((c1, c2) -> c2.obtenerTotalDonaciones().compareTo(c1.obtenerTotalDonaciones()));
+
+            // Tomamos los primeros 10 usuarios
+            for (int i = 0; i < 10 && i < creadores.size(); i++) {
+                topCreadores.add(creadores.get(i));
+            }
+
+            // Guardamos el excel de los usuarios con mas donaciones
+            DataExport.generarReporteExcelTopDonaciones(topCreadores);
+            
+        } catch (Exception e) {
+            System.out.println("Erro al generar el reporte de excel: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al generar el reporte de excel");
+        }
+    }//GEN-LAST:event_btnExcelActionPerformed
+
+    private void btnPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostsActionPerformed
+        // TODO add your handling code here:
+
+        // Cargamos los contenidos en el panel de containerPosts
+        LoadContent();
+
+    }//GEN-LAST:event_btnPostsActionPerformed
+
+    // Metodo para cargar el contenido en el container posts
+    public void LoadContent() {
+
+        // Vaciamos el contenido del container
+        this.containerPosts.removeAll();
+
+        // Cargar publicaciones del influencer
+        List<Contenido> contenidos = Dao.obtenerContenidos();
+
+        // Vamos agregando PanelContenido a containerPosts
+        for (Contenido contenido : contenidos) {
+
+            //Consultamos al influencer que creo elcontenido
+            CreadorContenido creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
+
+            PanelContenido panelContenido = new PanelContenido(contenido, creador, null, this);
+            // Seteamos el size del panel para que se ajuste al tamaño del container
+            panelContenido.setMaximumSize(panelContenido.getPreferredSize());
+            panelContenido.setPreferredSize(panelContenido.getPreferredSize());
+            this.containerPosts.add(panelContenido);
+        }
+
+        this.containerPosts.revalidate();
+        this.containerPosts.repaint();
+    }
+
+    // Metodo para obtener los usuarios y mostrarlos el container
+    public void LoadUsers() {
+        // Vaciamos el container
+        this.containerPosts.removeAll();
+
+        // Cargamos los usuarios creadores
+        List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+
+        for (CreadorContenido creador : creadores) {
+            // Creamos los paneles de usuario
+            PanelUsuarios panelUser = new PanelUsuarios(creador);
+
+            // Seteamos el size del panel para que se ajuste al tamaño del container
+            panelUser.setMaximumSize(panelUser.getPreferredSize());
+            panelUser.setPreferredSize(panelUser.getPreferredSize());
+            this.containerPosts.add(panelUser);
+
+        }
+
+        // Refrescamos la UI
+        this.containerPosts.revalidate();
+        this.containerPosts.repaint();
+    }
+
+    private void itemLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLogoutActionPerformed
+        // TODO add your handling code here:
+
+        // Abrimos la ventana de lolgin
+        Login login = new Login();
+        login.setVisible(true);
+        // Cerramos la ventana actual=
+        this.dispose();
+    }//GEN-LAST:event_itemLogoutActionPerformed
+
+    private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
+        // TODO add your handling code here:
+
+        // Cargamos los usuario s en el ctontainer post
+        LoadUsers();
+    }//GEN-LAST:event_btnUsersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +460,24 @@ public class HomeAdminForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.edisoncor.gui.button.ButtonRound btnExcel;
+    private org.edisoncor.gui.button.ButtonRound btnPDF;
+    private javax.swing.JButton btnPosts;
+    private javax.swing.JButton btnProfile;
+    private javax.swing.JButton btnUsers;
+    private javax.swing.JPanel containerHeader;
+    private javax.swing.JPanel containerPosts;
+    private javax.swing.JPanel containerView;
+    private javax.swing.JMenuItem itemLogout;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel panelPosts;
+    private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 }

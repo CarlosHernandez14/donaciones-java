@@ -55,7 +55,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
 
         // Vamos agregando PanelContenido a containerPosts
         for (Contenido contenido : contenidos) {
-            PanelContenido panelContenido = new PanelContenido(contenido, influencer);
+            PanelContenido panelContenido = new PanelContenido(contenido, influencer, this, null);
             // Seteamos el size del panel para que se ajuste al tamaño del container
             panelContenido.setMaximumSize(panelContenido.getPreferredSize());
             panelContenido.setPreferredSize(panelContenido.getPreferredSize());

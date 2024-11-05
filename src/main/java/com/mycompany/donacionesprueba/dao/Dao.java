@@ -127,6 +127,15 @@ public class Dao {
         return null;
     }
 
+    // Metodo paa obtener todos los creadores de contenido
+    public static List<CreadorContenido> obtenerCreadoresContenido() {
+        // Obtenemos los creadores de contenido
+        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+                new TypeToken<List<CreadorContenido>>() {
+                });
+        return creadorContenidoDao.cargar();
+    }
+
     // Metodo para actualizar creador de contenido
     public static void actualizarCreadorContenido(CreadorContenido creadorContenido) throws IOException {
         try {
