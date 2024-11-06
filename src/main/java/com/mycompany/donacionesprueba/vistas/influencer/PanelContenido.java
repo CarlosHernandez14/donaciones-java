@@ -11,6 +11,7 @@ import com.mycompany.donacionesprueba.clases.Like;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.clases.Visualizacion;
 import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.vistas.CommentsForm;
 import com.mycompany.donacionesprueba.vistas.admin.HomeAdminForm;
 
 import java.io.IOException;
@@ -279,6 +280,11 @@ public class PanelContenido extends javax.swing.JPanel {
         btnComentar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/donacionesprueba/vistas/assets/icon-comentar.png"))); // NOI18N
         btnComentar.setText("Comentar");
         btnComentar.setBorderPainted(false);
+        btnComentar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComentarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -473,6 +479,15 @@ public class PanelContenido extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btnDonarActionPerformed
+
+    private void btnComentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarActionPerformed
+        // TODO add your handling code here:
+        
+        //Abrimos una ventana de Comentarios
+        CommentsForm commentsForm = new CommentsForm(contenido, usuario);
+        
+        commentsForm.setVisible(true);
+    }//GEN-LAST:event_btnComentarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
