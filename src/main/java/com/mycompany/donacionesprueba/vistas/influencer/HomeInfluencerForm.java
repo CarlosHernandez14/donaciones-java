@@ -93,7 +93,6 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         tabbedPane = new javax.swing.JTabbedPane();
         panelPosts = new javax.swing.JPanel();
         containerHeader = new javax.swing.JPanel();
-        fieldSearchBar = new org.edisoncor.gui.textField.TextFieldRound();
         btnAddContent = new org.edisoncor.gui.button.ButtonRound();
         jPanel2 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -150,6 +149,11 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         btnPosts.setText("Publicaciones");
         btnPosts.setBorder(null);
         btnPosts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPosts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,9 +194,6 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
 
         containerHeader.setBackground(new java.awt.Color(255, 255, 255));
 
-        fieldSearchBar.setBackground(new java.awt.Color(255, 255, 255));
-        fieldSearchBar.setText("Buscar publicaciones...");
-
         btnAddContent.setBackground(new java.awt.Color(255, 102, 51));
         btnAddContent.setText("Agregar contenido +");
         btnAddContent.setColorDeSombra(new java.awt.Color(255, 102, 0));
@@ -207,9 +208,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         containerHeaderLayout.setHorizontalGroup(
             containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerHeaderLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(fieldSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addContainerGap(567, Short.MAX_VALUE)
                 .addComponent(btnAddContent, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -217,9 +216,7 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
             containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(containerHeaderLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(containerHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddContent, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnAddContent, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -325,6 +322,13 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemCerrarSesionActionPerformed
 
+    private void btnPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostsActionPerformed
+        // TODO add your handling code here:
+        
+        //Recargamos los posts
+        actualizarDatos();
+    }//GEN-LAST:event_btnPostsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -369,7 +373,6 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
     private javax.swing.JPanel containerHeader;
     private javax.swing.JPanel containerPosts;
     private javax.swing.JPanel containerView;
-    private org.edisoncor.gui.textField.TextFieldRound fieldSearchBar;
     private javax.swing.JMenuItem itemCerrarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

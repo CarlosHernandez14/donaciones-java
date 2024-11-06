@@ -183,6 +183,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPostsActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -237,9 +240,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                              <Component id="fieldSearchBar" min="-2" pref="261" max="-2" attributes="0"/>
-                              <EmptySpace pref="247" max="32767" attributes="0"/>
+                              <EmptySpace pref="567" max="32767" attributes="0"/>
                               <Component id="btnAddContent" min="-2" pref="182" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
@@ -249,24 +250,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="fieldSearchBar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="btnAddContent" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btnAddContent" min="-2" pref="38" max="-2" attributes="0"/>
                               <EmptySpace pref="25" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="org.edisoncor.gui.textField.TextFieldRound" name="fieldSearchBar">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar publicaciones..."/>
-                      </Properties>
-                    </Component>
                     <Component class="org.edisoncor.gui.button.ButtonRound" name="btnAddContent">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

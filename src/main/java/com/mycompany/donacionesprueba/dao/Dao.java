@@ -20,6 +20,12 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @author carlo
  */
 public class Dao {
+    
+    // File paths
+    private static final String USUARIO_PATH = "usuario.json";
+    private static final String CREADOR_CONTENIDO_PATH = "creadorContenido.json";
+    private static final String ADMINISTRADOR_PATH = "administrador.json";
+    private static final String CONTENIDO_PATH = "contenido.json";
 
     public Dao() {
 
@@ -27,7 +33,7 @@ public class Dao {
 
     // Metodo para verificar si el usuario existe
     public static Usuario verificarUsuario(String correo, String contrasena) {
-        GenericDao<Usuario> usuarioDao = new GenericDao<>("usuario.json", new TypeToken<List<Usuario>>() {
+        GenericDao<Usuario> usuarioDao = new GenericDao<>(USUARIO_PATH, new TypeToken<List<Usuario>>() {
         });
         List<Usuario> usuarios = usuarioDao.cargar();
 
@@ -38,7 +44,7 @@ public class Dao {
         }
 
         // Si no se encuentra en usuarios lo buscamos en creadores de contenido
-        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>(CREADOR_CONTENIDO_PATH,
                 new TypeToken<List<CreadorContenido>>() {
                 });
 
@@ -52,7 +58,7 @@ public class Dao {
         }
 
         // Si no se encuentra en creadores de contenido lo buscamos en administradores
-        GenericDao<Administrador> administradorDao = new GenericDao<>("administrador.json",
+        GenericDao<Administrador> administradorDao = new GenericDao<>(ADMINISTRADOR_PATH,
                 new TypeToken<List<Administrador>>() {
                 });
 
@@ -71,7 +77,7 @@ public class Dao {
     // Metodo para guardar un usuario
     public static void guardarUsuario(Usuario usuario) throws IOException {
         try {
-            GenericDao<Usuario> usuarioDao = new GenericDao<>("usuario.json", new TypeToken<List<Usuario>>() {
+            GenericDao<Usuario> usuarioDao = new GenericDao<>(USUARIO_PATH, new TypeToken<List<Usuario>>() {
             });
             List<Usuario> usuarios = usuarioDao.cargar();
 
@@ -90,7 +96,7 @@ public class Dao {
     // Metodo para guardar un creador de contenido
     public static void guardarCreadorContenido(CreadorContenido creadorContenido) throws IOException {
         try {
-            GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+            GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>(CREADOR_CONTENIDO_PATH,
                     new TypeToken<List<CreadorContenido>>() {
                     });
             List<CreadorContenido> creadoresContenido = creadorContenidoDao.cargar();
@@ -110,7 +116,7 @@ public class Dao {
     // Metodo para obtener un creador de contenido por id
     public static CreadorContenido obtenerCreadorContenido(String id) {
         // Buscamos el creador de contenido por id
-        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>(CREADOR_CONTENIDO_PATH,
                 new TypeToken<List<CreadorContenido>>() {
                 });
         // Cargamos los creadores de contenido actuales
@@ -130,7 +136,7 @@ public class Dao {
     // Metodo paa obtener todos los creadores de contenido
     public static List<CreadorContenido> obtenerCreadoresContenido() {
         // Obtenemos los creadores de contenido
-        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+        GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>(CREADOR_CONTENIDO_PATH,
                 new TypeToken<List<CreadorContenido>>() {
                 });
         return creadorContenidoDao.cargar();
@@ -140,7 +146,7 @@ public class Dao {
     public static void actualizarCreadorContenido(CreadorContenido creadorContenido) throws IOException {
         try {
             // Leemos los creadores de contenido actuales del archivo json
-            GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>("creadorContenido.json",
+            GenericDao<CreadorContenido> creadorContenidoDao = new GenericDao<>(CREADOR_CONTENIDO_PATH,
                     new TypeToken<List<CreadorContenido>>() {
                     });
             // Cargamos los creadores de contenido actuales
@@ -167,7 +173,7 @@ public class Dao {
     public static void guardarAdministrador(Administrador administrador) throws IOException {
         try {
             // Creamos un objeto de tipo GenericDao para administradores
-            GenericDao<Administrador> administradorDao = new GenericDao<>("administrador.json",
+            GenericDao<Administrador> administradorDao = new GenericDao<>(ADMINISTRADOR_PATH,
                     new TypeToken<List<Administrador>>() {
                     });
             // Cargamos los administradores actuales
@@ -193,7 +199,7 @@ public class Dao {
 
         try {
             // Leemos los contenidos actuales del archivo json
-            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            GenericDao<Contenido> contenidoDao = new GenericDao<>(CONTENIDO_PATH, new TypeToken<List<Contenido>>() {
             });
             // Cargamos los contenidos actuales
             List<Contenido> contenidos = contenidoDao.cargar();
@@ -215,7 +221,7 @@ public class Dao {
 
     // Metodo para obtener todos los contenidos
     public static List<Contenido> obtenerContenidos() {
-        GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+        GenericDao<Contenido> contenidoDao = new GenericDao<>(CONTENIDO_PATH, new TypeToken<List<Contenido>>() {
         });
         return contenidoDao.cargar();
     }
@@ -224,7 +230,7 @@ public class Dao {
     public static void actualizarContenido(Contenido contenido) throws IOException {
         try {
             // Leemos los contenidos actuales del archivo json
-            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            GenericDao<Contenido> contenidoDao = new GenericDao<>(CONTENIDO_PATH, new TypeToken<List<Contenido>>() {
             });
             // Cargamos los contenidos actuales
             List<Contenido> contenidos = contenidoDao.cargar();
@@ -250,7 +256,7 @@ public class Dao {
     public static void eliminarContenido(String idContenido) throws IOException {
         try {
             // Leemos los contenidos actuales del archivo json
-            GenericDao<Contenido> contenidoDao = new GenericDao<>("contenido.json", new TypeToken<List<Contenido>>() {
+            GenericDao<Contenido> contenidoDao = new GenericDao<>(CONTENIDO_PATH, new TypeToken<List<Contenido>>() {
             });
             // Cargamos los contenidos actuales
             List<Contenido> contenidos = contenidoDao.cargar();
