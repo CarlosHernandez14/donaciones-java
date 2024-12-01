@@ -11,8 +11,18 @@ import java.io.Serializable;
  * @author carlo
  */
 public class Administrador extends Usuario implements Serializable {
-    public Administrador(String id, String nombre, String email, String contrasena) {
-        super(id, nombre, email, contrasena);
+    
+    private String idAdministrador;
+    
+    // Constructor lectura
+    public Administrador(String idAdministrador, String idUsuario, String nombre, String email, String contrasena) {
+        super(idUsuario, nombre, email, contrasena);
+        this.idAdministrador = idAdministrador;
+    }
+    
+    // CONSTRUCTOR ESCRITURA
+    public Administrador(String nombre, String email, String contrasena) {
+        super(nombre, email, contrasena);
     }
 
     public void eliminarContenido(Contenido contenido) {
@@ -32,4 +42,19 @@ public class Administrador extends Usuario implements Serializable {
     public void descargarReporteExcel() {
         // Lógica para descargar un Excel con los usuarios que reciben más donaciones
     }
+
+    public String getIdAdministrador() {
+        return idAdministrador;
+    }
+
+    public void setIdAdministrador(String idAdministrador) {
+        this.idAdministrador = idAdministrador;
+    }
+
+    @Override
+    public String toString() {
+        return "Administrador{" + "idAdministrador=" + idAdministrador + '}';
+    }
+    
+    
 }

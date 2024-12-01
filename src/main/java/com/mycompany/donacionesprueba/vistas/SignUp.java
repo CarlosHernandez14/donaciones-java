@@ -376,13 +376,13 @@ public class SignUp extends javax.swing.JFrame {
 
             } else if (tipoUsuario.equals("Creador de Contenido")) {
                 // Creamos un nuevo creador de contenido
-                CreadorContenido creadorContenido = new CreadorContenido(Usuario.generarId(), nombre, correo,
+                CreadorContenido creadorContenido = new CreadorContenido(nombre, correo,
                         contrasena);
                 // Guardamos el creador de contenido
                 Dao.guardarCreadorContenido(creadorContenido);
             } else if (tipoUsuario.equals("Administrador")){
                 // Creamos un admnistrador
-                Administrador admin = new Administrador(Usuario.generarId(), nombre, correo, contrasena);
+                Administrador admin = new Administrador(nombre, correo, contrasena);
                 // Guardamos al admin en la db
                 Dao.guardarAdministrador(admin);
             }

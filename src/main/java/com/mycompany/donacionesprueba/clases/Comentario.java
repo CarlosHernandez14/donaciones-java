@@ -4,27 +4,40 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author carlo
  */
-public class Visualizacion {
+public class Comentario implements Serializable{
     
-    private String idVisualizacion;
-    private String idUsuario;
+    private String id;
+    private String idUsuario; 
     private String idContenido;
-    
-    // CONSTRUCTOR LECTURA
-    public Visualizacion(String idVisualizacion, String idUsuario, String idContenido) {
-        this.idVisualizacion = idVisualizacion;
+
+    public Comentario() {
+    }
+
+    // CONSTRUCTOR DE LECTURA
+    public Comentario(String id, String idUsuario, String idContenido) {
+        this.id = id;
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
     }
-    
-    // Constructor escritura
-    public Visualizacion(String idUsuario, String idContenido) {
+
+    // CONSTRUCTOR DE CREACION
+    public Comentario(String idUsuario, String idContenido) {
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIdUsuario() {
@@ -42,18 +55,11 @@ public class Visualizacion {
     public void setIdContenido(String idContenido) {
         this.idContenido = idContenido;
     }
-    
-    public String getIdVisualizacion() {
-        return idVisualizacion;
-    }
-
-    public void setIdVisualizacion(String idVisualizacion) {
-        this.idVisualizacion = idVisualizacion;
-    }
 
     @Override
     public String toString() {
-        return "Visualizacion{" + "idUsuario=" + idUsuario + ", idContenido=" + idContenido + '}';
+        return "Comentario{" + "id=" + id + ", idUsuario=" + idUsuario + ", idContenido=" + idContenido + '}';
     }
+    
     
 }

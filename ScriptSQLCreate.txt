@@ -1,0 +1,29 @@
+mysql -u root -p
+
+create database donaciones;
+
+use donaciones;
+
+
+CREATE TABLE Usuarios ( idUsuario CHAR(36) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL UNIQUE, contrasena VARCHAR(200) NOT NULL );
+
+CREATE TABLE Administradores ( idAdministrador CHAR(36) PRIMARY KEY, idUsuario CHAR(36) NOT NULL, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE );
+
+
+CREATE TABLE Creador ( idCreador CHAR(36) PRIMARY KEY, cuenta_bloqueada BOOLEAN DEFAULT FALSE, partner BOOLEAN DEFAULT FALSE, idUsuario CHAR(36) NOT NULL, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE );
+
+
+CREATE TABLE Contenido ( idContenido CHAR(36) PRIMARY KEY, titulo VARCHAR(100) NOT NULL, descripcion VARCHAR(100) NOT NULL, idCreador CHAR(36) NOT NULL, donaciones DECIMAL(10, 2) NOT NULL, image_path VARCHAR(200), FOREIGN KEY (idCreador) REFERENCES Creador(idCreador) ON DELETE CASCADE );
+
+CREATE TABLE Likes ( idLike CHAR(36) PRIMARY KEY, idUsuario CHAR(36) NOT NULL, idContenido CHAR(36) NOT NULL, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE, FOREIGN KEY (idContenido) REFERENCES Contenido(idContenido) ON DELETE CASCADE );
+
+CREATE TABLE Visualizaciones ( idVisualizacion CHAR(36) PRIMARY KEY, idUsuario CHAR(36) NOT NULL, idContenido CHAR(36) NOT NULL, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE, FOREIGN KEY (idContenido) REFERENCES Contenido(idContenido) ON DELETE CASCADE );
+
+CREATE TABLE Comentarios ( idComentario CHAR(36) PRIMARY KEY, idUsuario CHAR(36) NOT NULL, idContenido CHAR(36) NOT NULL, comentario TEXT NOT NULL, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE, FOREIGN KEY (idContenido) REFERENCES Contenido(idContenido) ON DELETE CASCADE );
+
+CREATE TABLE Suscripciones ( idSuscripcion CHAR(36) PRIMARY KEY, idCreador CHAR(36) NOT NULL, idUsuario CHAR(36) NOT NULL, FOREIGN KEY (idCreador) REFERENCES Creador(idCreador) ON DELETE CASCADE, FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE );
+
+
+
+
+

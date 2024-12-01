@@ -11,12 +11,22 @@ import java.io.Serializable;
  * @author carlo
  */
 public class Like implements Serializable{
+    
+    private String idLike;
     private String idUsuario;
     private String idContenido;
 
     public Like() {
     }
 
+    // CONSTRUCTOR LECTURA
+    public Like(String idLike, String idUsuario, String idContenido) {
+        this.idLike = idLike;
+        this.idUsuario = idUsuario;
+        this.idContenido = idContenido;
+    }
+    
+    // CONSTRUCTOR ESCRITURA
     public Like(String idUsuario, String idContenido) {
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
@@ -42,6 +52,14 @@ public class Like implements Serializable{
 
     public void setIdContenido(String idContenido) {
         this.idContenido = idContenido;
+    }
+
+    public String getIdLike() {
+        return idLike;
+    }
+
+    public void setIdLike(String idLike) {
+        this.idLike = idLike;
     }
     
 }

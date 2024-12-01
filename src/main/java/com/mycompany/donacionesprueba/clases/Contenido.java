@@ -21,6 +21,7 @@ public class Contenido implements Serializable {
     private double donaciones;
     private String imagePath;
 
+    // CONSTRUCTOR PARA CREACION
     public Contenido(String titulo, String descripcion, String idCreador, String imagePath) {
         this.titulo = titulo;
         this.descripcion = descripcion;

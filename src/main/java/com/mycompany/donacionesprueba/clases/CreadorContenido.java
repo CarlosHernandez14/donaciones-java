@@ -16,13 +16,23 @@ import java.util.List;
  */
 public class CreadorContenido extends Usuario implements Serializable {
 
+    private String idCreador;
     private ArrayList<Contenido> contenidos;
     private boolean cuentaBloqueada;
     private ArrayList<String> suscriptores; // Guarda el id de los usuarios suscritos
     private boolean partner;
 
-    public CreadorContenido(String idUsuario, String nombre, String email, String contrasena) {
+    public CreadorContenido(String idCreador, String idUsuario, String nombre, String email, String contrasena) {
         super(idUsuario, nombre, email, contrasena);
+        this.idCreador = idCreador;
+        this.contenidos = new ArrayList<>();
+        this.suscriptores = new ArrayList<>();
+        this.cuentaBloqueada = false;
+    }
+    
+    // CONSTRUCTOR DE CREACION
+    public CreadorContenido(String nombre, String email, String contrasena) {
+        super(nombre, email, contrasena);
         this.contenidos = new ArrayList<>();
         this.suscriptores = new ArrayList<>();
         this.cuentaBloqueada = false;

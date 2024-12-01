@@ -20,6 +20,7 @@ public class Usuario implements Serializable {
 
     }
 
+    // CONSTRUCTOR LECTURA
     public Usuario(String id, String nombre, String correo, String contrasena) {
         this.id = id;
         this.nombre = nombre;
@@ -27,6 +28,7 @@ public class Usuario implements Serializable {
         this.contrasena = contrasena;
     }
 
+    // CONCSTRUCTOR ESCRITRUA
     public Usuario(String nombre, String correo, String contrasena) {
         this.nombre = nombre;
         this.correo = correo;
