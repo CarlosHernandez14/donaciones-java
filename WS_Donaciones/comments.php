@@ -41,14 +41,15 @@ try {
             // Crear un nuevo comentario
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['content']) || !isset($input['userId'])) {
+            if (!isset($input['idUsuario']) || !isset($input['idContenido']) || !isset($input['comentario'])) {
                 throw new Exception("Faltan datos necesarios para crear el comentario");
             }
 
-            $content = $input['content'];
-            $userId = $input['userId'];
+            $idUsuario = $input['idUsuario'];
+            $idContenido = $input['idContenido'];
+            $comentario = $input['comentario'];
 
-            //$result = $db->createComment($content, $userId);
+            $result = $db->createComment($idUsuario, $idContenido, $comentario);
 
             echo json_encode([
                 'OK' => true,

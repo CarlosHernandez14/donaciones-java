@@ -41,14 +41,14 @@ try {
             // Crear un nuevo like
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['idContenido']) || !isset($input['idUsuario'])) {
+            if (!isset($input['idUsuario']) || !isset($input['idContenido'])) {
                 throw new Exception("Faltan datos necesarios para crear el like");
             }
 
+            $idUsuario = $input['idUsuario'];   
             $idContenido = $input['idContenido'];
-            $idUsuario = $input['idUsuario'];
 
-            //$result = $db->createLike($idContenido, $idUsuario);
+            $result = $db->createLike($idUsuario, $idContenido);
 
             echo json_encode([
                 'OK' => true,
@@ -82,13 +82,13 @@ try {
             // Eliminar un like existente
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['id'])) {
+            if (!isset($input['idLike'])) {
                 throw new Exception("Faltan datos necesarios para eliminar el like");
             }
 
-            $id = $input['id'];
+            $id = $input['idLike'];
 
-            //$result = $db->deleteLike($id);
+            $result = $db->deleteLike($id);
 
             echo json_encode([
                 'OK' => true,

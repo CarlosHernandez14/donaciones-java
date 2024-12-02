@@ -40,14 +40,14 @@ try {
             // Crear una nueva vista
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['idContenido']) || !isset($input['idUsuario'])) {
+            if (!isset($input['idUsuario']) || !isset($input['idContenido'])) {
                 throw new Exception("Faltan datos necesarios para crear la vista");
             }
 
-            $idContenido = $input['idContenido'];
             $idUsuario = $input['idUsuario'];
+            $idContenido = $input['idContenido'];
 
-            //$result = $db->createView($idContenido, $idUsuario);
+            $result = $db->createView($idUsuario, $idContenido);
 
             echo json_encode([
                 'OK' => true,

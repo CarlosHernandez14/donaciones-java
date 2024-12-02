@@ -37,14 +37,17 @@ try {
             // Crear un nuevo contenido
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['name']) || !isset($input['userId'])) {
+            if (!isset($input['titulo']) || !isset($input['descripcion']) || !isset($input['idCreador'])) {
                 throw new Exception("Faltan datos necesarios para crear el contenido");
             }
 
-            $name = $input['name'];
-            $userId = $input['userId'];
+            $titulo = $input['titulo'];
+            $descripcion = $input['descripcion'];
+            $idCreador = $input['idCreador'];
+            $donaciones = $input['donaciones'] ?? null;
+            $image_path = $input['image_path'] ?? null;
 
-            //$result = $db->createContent($name, $userId);
+            $result = $db->createContent($titulo, $descripcion, $idCreador, $donaciones, $image_path);
 
             echo json_encode([
                 'OK' => true,
@@ -57,15 +60,17 @@ try {
             // Actualizar un contenido existente
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['id']) || !isset($input['name']) || !isset($input['userId'])) {
+            if (!isset($input['idContenido'])) {
                 throw new Exception("Faltan datos necesarios para actualizar el contenido");
             }
 
-            $id = $input['id'];
-            $name = $input['name'];
-            $userId = $input['userId'];
+            $id = $input['idContenido'];
+            $titulo = $input['titulo'] ?? null;
+            $descripcion = $input['descripcion'] ?? null;
+            $donaciones = $input['donaciones'] ?? null;
+            $image_path = $input['image_path'] ?? null;
 
-            //$result = $db->updateContent($id, $name, $userId);
+            $result = $db->updateContent($id, $titulo, $descripcion, $donaciones, $image_path);
 
             echo json_encode([
                 'OK' => true,
@@ -78,13 +83,13 @@ try {
             // Eliminar un contenido existente
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['id'])) {
+            if (!isset($input['idContenido'])) {
                 throw new Exception("Falta el ID del contenido a eliminar");
             }
 
-            $id = $input['id'];
+            $id = $input['idContenido'];
 
-            //$result = $db->deleteContent($id);
+            $result = $db->deleteContent($id);
 
             echo json_encode([
                 'OK' => true,

@@ -37,14 +37,14 @@ try {
             // Crear una nueva suscripción
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['idContenido']) || !isset($input['idUsuario'])) {
+            if (!isset($input['idCreador']) || !isset($input['idUsuario'])) {
                 throw new Exception("Faltan datos necesarios para crear la suscripción");
             }
 
-            $idContenido = $input['idContenido'];
+            $idCreador = $input['idCreador'];
             $idUsuario = $input['idUsuario'];
 
-            //$result = $db->createSuscription($idContenido, $idUsuario);
+            $result = $db->createSubscription($idCreador, $idUsuario);
 
             echo json_encode([
                 'OK' => true,
@@ -78,13 +78,13 @@ try {
             // Eliminar una suscripción existente
             $input = json_decode(file_get_contents('php://input'), true);
 
-            if (!isset($input['id'])) {
+            if (!isset($input['idSuscripcion'])) {
                 throw new Exception("Faltan datos necesarios para eliminar la suscripción");
             }
 
-            $id = $input['id'];
+            $id = $input['idSuscripcion'];
 
-            //$result = $db->deleteSuscription($id);
+            $result = $db->deleteSubscription($id);
 
             echo json_encode([
                 'OK' => true,

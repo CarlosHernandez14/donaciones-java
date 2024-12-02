@@ -61,8 +61,8 @@ try {
             }
 
             $id = $input['idCreador'];
-            $cuenta_bloqueada = $input['cuenta_bloqueada'] ?? false;
-            $partner = $input['partner'] ?? false;
+            $cuenta_bloqueada = $input['cuenta_bloqueada'] ?? null;
+            $partner = $input['partner'] ?? null;
 
             $result = $db->updateCreator($id, $cuenta_bloqueada, $partner);
 

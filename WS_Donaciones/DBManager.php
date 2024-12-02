@@ -331,14 +331,18 @@
                 die("El creador no existe");
             }
 
-            // Si no se envia un campo, se mantiene el valor actual
-            if (!$cuenta_bloqueada) {
+            // Si no se envía un campo, se mantiene el valor actual
+            if ($cuenta_bloqueada === null) {
                 $cuenta_bloqueada = $currentCreator['cuenta_bloqueada'];
             }
 
-            if (!$partner) {
+            if ($partner === null) {
                 $partner = $currentCreator['partner'];
             }
+
+            // Convertimos  los valores de cuenta_bloqueada y partner a enteros
+            $cuenta_bloqueada = $cuenta_bloqueada ? 1 : 0;
+            $partner = $partner ? 1 : 0;
 
             // Actualizamos el creador
 
@@ -409,6 +413,117 @@
             } else {
                 $this->close($link);
                 die("Error al obtener el contenido");
+            }
+        }
+
+        // Funcion para crear un contenido
+        public function createContent($titulo, $descripcion, $idCreador, $donaciones = null, $image_path = null) {
+            $link = $this->open();
+            
+            // Modificamos la consulta para que retorne el UUID generado
+            $query = "INSERT INTO contenido (idContenido, titulo, descripcion, idCreador, donaciones, image_path) 
+                      VALUES (UUID(), '$titulo', '$descripcion', '$idCreador', '$donaciones', '$image_path')";
+
+            $result = mysqli_query($link, $query);
+
+            if ($result) {
+                // Obtenemos el último UUID insertado
+                $query = "SELECT idContenido FROM contenido WHERE titulo = '$titulo' LIMIT 1";
+                $result = mysqli_query($link, $query);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $id = $row['idContenido'];
+                    $this->close($link);
+                    return $id; // Devolvemos el UUID insertado
+                } else {
+                    $this->close($link);
+                    die("Error al obtener el ID del contenido");
+                }
+            } else {
+                $this->close($link);
+                die("Error al crear el contenido");
+            }
+        }
+
+        // Funcion para actualizar un contenido
+        public function updateContent($id, $titulo = null, $descripcion = null, $idCreador = null, $donaciones = null, $image_path = null) {
+            $link = $this->open();
+
+            // Consultamos si el contenido existe
+            $query = "SELECT * FROM contenido WHERE idContenido = '$id'";
+            $result = mysqli_query($link, $query);
+
+            $currentContent = mysqli_fetch_assoc($result);
+
+            if (!$currentContent) {
+                $this->close($link);
+                die("El contenido no existe");
+            }
+
+            // Si no se envía un campo, se mantiene el valor actual
+            if (!$titulo) {
+                $titulo = $currentContent['titulo'];
+            }
+
+            if (!$descripcion) {
+                $descripcion = $currentContent['descripcion'];
+            }
+
+            if (!$idCreador) {
+                $idCreador = $currentContent['idCreador'];
+            }
+
+            if (!$donaciones) {
+                $donaciones = $currentContent['donaciones'];
+            }
+
+            if (!$image_path) {
+                $image_path = $currentContent['image_path'];
+            }
+
+            // Actualizamos el contenido
+
+            $query = "UPDATE contenido SET titulo = '$titulo', descripcion = '$descripcion', idCreador = '$idCreador', donaciones = '$donaciones', image_path = '$image_path' WHERE idContenido = '$id'";
+            $result = mysqli_query($link, $query);
+            
+            if ($result) {
+                $this->close($link);
+                // Devolvemos el ID del contenido actualizado
+                return $id;
+            } else {
+                $this->close($link);
+                die("Error al actualizar el contenido");
+            }
+        }
+
+        // Funcion para eliminar un contenido
+        public function deleteContent($id) {
+            $link = $this->open();
+
+            // Consultamos si el contenido existe
+            $query = "SELECT * FROM contenido WHERE idContenido = '$id'";
+            $result = mysqli_query($link, $query);
+
+            $currentContent = mysqli_fetch_assoc($result);
+
+            if (!$currentContent) {
+                $this->close($link);
+                die("El contenido no existe");
+            }
+
+            // Eliminamos el contenido
+
+            $query = "DELETE FROM contenido WHERE idContenido = '$id'";
+            $result = mysqli_query($link, $query);
+            
+            if ($result) {
+                $this->close($link);
+                // Devolvemos el ID del contenido eliminado
+                return $id;
+            } else {
+                $this->close($link);
+                die("Error al eliminar el contenido");
             }
         }
 
@@ -493,6 +608,36 @@
             } else {
                 $this->close($link);
                 die("Error al obtener los comentarios");
+            }
+        }
+
+        // Funcion para crear un comentario
+        public function createComment($idUsuario, $idContenido, $comentario) {
+            $link = $this->open();
+            
+            // Modificamos la consulta para que retorne el UUID generado
+            $query = "INSERT INTO comentarios (idComentario, idUsuario, idContenido, comentario) 
+                      VALUES (UUID(), '$idUsuario', '$idContenido', '$comentario')";
+
+            $result = mysqli_query($link, $query);
+
+            if ($result) {
+                // Obtenemos el último UUID insertado
+                $query = "SELECT idComentario FROM comentarios WHERE idUsuario = '$idUsuario' AND idContenido = '$idContenido' AND comentario = '$comentario' LIMIT 1";
+                $result = mysqli_query($link, $query);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $id = $row['idComentario'];
+                    $this->close($link);
+                    return $id; // Devolvemos el UUID insertado
+                } else {
+                    $this->close($link);
+                    die("Error al obtener el ID del comentario");
+                }
+            } else {
+                $this->close($link);
+                die("Error al crear el comentario");
             }
         }
 
@@ -581,6 +726,66 @@
             }
         }
 
+        // Funcion para crear un like
+        public function createLike($idUsuario, $idContenido) {
+            $link = $this->open();
+            
+            // Modificamos la consulta para que retorne el UUID generado
+            $query = "INSERT INTO likes (idLike, idUsuario, idContenido) 
+                      VALUES (UUID(), '$idUsuario', '$idContenido')";
+
+            $result = mysqli_query($link, $query);
+
+            if ($result) {
+                // Obtenemos el último UUID insertado
+                $query = "SELECT idLike FROM likes WHERE idUsuario = '$idUsuario' AND idContenido = '$idContenido' LIMIT 1";
+                $result = mysqli_query($link, $query);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $id = $row['idLike'];
+                    $this->close($link);
+                    return $id; // Devolvemos el UUID insertado
+                } else {
+                    $this->close($link);
+                    die("Error al obtener el ID del like");
+                }
+            } else {
+                $this->close($link);
+                die("Error al crear el like");
+            }
+        }
+
+        // Funcion para eliminar un like
+        public function deleteLike($id) {
+            $link = $this->open();
+
+            // Consultamos si el like existe
+            $query = "SELECT * FROM likes WHERE idLike = '$id'";
+            $result = mysqli_query($link, $query);
+
+            $currentLike = mysqli_fetch_assoc($result);
+
+            if (!$currentLike) {
+                $this->close($link);
+                die("El like no existe");
+            }
+
+            // Eliminamos el like
+
+            $query = "DELETE FROM likes WHERE idLike = '$id'";
+            $result = mysqli_query($link, $query);
+            
+            if ($result) {
+                $this->close($link);
+                // Devolvemos el ID del like eliminado
+                return $id;
+            } else {
+                $this->close($link);
+                die("Error al eliminar el like");
+            }
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
 
         // METODOS PARA MANEJAR LAS VISUALIZACIONES DE LOS CONTENIDOS EN LA BASE DE DATOS
@@ -663,6 +868,36 @@
             } else {
                 $this->close($link);
                 die("Error al obtener las visualizaciones");
+            }
+        }
+
+        // Funcion para crear una visualizacion
+        public function createView($idUsuario, $idContenido) {
+            $link = $this->open();
+            
+            // Modificamos la consulta para que retorne el UUID generado
+            $query = "INSERT INTO visualizaciones (idVisualizacion, idUsuario, idContenido) 
+                      VALUES (UUID(), '$idUsuario', '$idContenido')";
+
+            $result = mysqli_query($link, $query);
+
+            if ($result) {
+                // Obtenemos el último UUID insertado
+                $query = "SELECT idVisualizacion FROM visualizaciones WHERE idUsuario = '$idUsuario' AND idContenido = '$idContenido' LIMIT 1";
+                $result = mysqli_query($link, $query);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $id = $row['idVisualizacion'];
+                    $this->close($link);
+                    return $id; // Devolvemos el UUID insertado
+                } else {
+                    $this->close($link);
+                    die("Error al obtener el ID de la visualizacion");
+                }
+            } else {
+                $this->close($link);
+                die("Error al crear la visualizacion");
             }
         }
 
@@ -751,6 +986,65 @@
             }
         }
 
+        // Funcion para crear una suscripcion
+        public function createSubscription($idCreador, $idUsuario) {
+            $link = $this->open();
+            
+            // Modificamos la consulta para que retorne el UUID generado
+            $query = "INSERT INTO suscripciones (idSuscripcion, idCreador, idUsuario) 
+                      VALUES (UUID(), '$idCreador', '$idUsuario')";
+
+            $result = mysqli_query($link, $query);
+
+            if ($result) {
+                // Obtenemos el último UUID insertado
+                $query = "SELECT idSuscripcion FROM suscripciones WHERE idCreador = '$idCreador' AND idUsuario = '$idUsuario' LIMIT 1";
+                $result = mysqli_query($link, $query);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $id = $row['idSuscripcion'];
+                    $this->close($link);
+                    return $id; // Devolvemos el UUID insertado
+                } else {
+                    $this->close($link);
+                    die("Error al obtener el ID de la suscripcion");
+                }
+            } else {
+                $this->close($link);
+                die("Error al crear la suscripcion");
+            }
+        }
+
+        // Funcion para eliminar una suscripcion
+        public function deleteSubscription($id) {
+            $link = $this->open();
+
+            // Consultamos si la suscripcion existe
+            $query = "SELECT * FROM suscripciones WHERE idSuscripcion = '$id'";
+            $result = mysqli_query($link, $query);
+
+            $currentSubscription = mysqli_fetch_assoc($result);
+
+            if (!$currentSubscription) {
+                $this->close($link);
+                die("La suscripcion no existe");
+            }
+
+            // Eliminamos la suscripcion
+
+            $query = "DELETE FROM suscripciones WHERE idSuscripcion = '$id'";
+            $result = mysqli_query($link, $query);
+            
+            if ($result) {
+                $this->close($link);
+                // Devolvemos el ID de la suscripcion eliminada
+                return $id;
+            } else {
+                $this->close($link);
+                die("Error al eliminar la suscripcion");
+            }
+        }
 
 
     }
