@@ -15,21 +15,24 @@ public class Comentario implements Serializable{
     private String id;
     private String idUsuario; 
     private String idContenido;
+    private String comentario;
 
     public Comentario() {
     }
 
     // CONSTRUCTOR DE LECTURA
-    public Comentario(String id, String idUsuario, String idContenido) {
+    public Comentario(String id, String idUsuario, String idContenido, String comentario) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
+        this.comentario = comentario;
     }
 
     // CONSTRUCTOR DE CREACION
-    public Comentario(String idUsuario, String idContenido) {
+    public Comentario(String idUsuario, String idContenido, String comentario) {
         this.idUsuario = idUsuario;
         this.idContenido = idContenido;
+        this.comentario = comentario;
     }
 
     public String getId() {
@@ -55,11 +58,19 @@ public class Comentario implements Serializable{
     public void setIdContenido(String idContenido) {
         this.idContenido = idContenido;
     }
+    
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
     @Override
     public String toString() {
         return "Comentario{" + "id=" + id + ", idUsuario=" + idUsuario + ", idContenido=" + idContenido + '}';
     }
-    
+
     
 }

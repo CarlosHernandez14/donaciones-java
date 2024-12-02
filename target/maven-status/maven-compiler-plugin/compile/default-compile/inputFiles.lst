@@ -1,4 +1,5 @@
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\clases\Administrador.java
+C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\clases\Comentario.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\clases\Contenido.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\clases\CreadorContenido.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\clases\Like.java
@@ -7,7 +8,9 @@ C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\myc
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\dao\Dao.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\dao\DataExport.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\dao\GenericDao.java
+C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\dao\WSManager.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\DonacionesPrueba.java
+C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\TestingClass.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\vistas\admin\HomeAdminForm.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\vistas\admin\PanelUsuarios.java
 C:\Users\carlo\Documents\NetBeansProjects\DonacionesPrueba\src\main\java\com\mycompany\donacionesprueba\vistas\CommentsForm.java

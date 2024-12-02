@@ -17,7 +17,7 @@ public class Contenido implements Serializable {
     private String idCreador;
     private ArrayList<Visualizacion> visualizaciones;
     private ArrayList<Like> likes;
-    private List<String> comentarios;
+    private List<Comentario> comentarios;
     private double donaciones;
     private String imagePath;
 
@@ -37,7 +37,7 @@ public class Contenido implements Serializable {
     // Constructor para cargar contenido desde la DB
     public Contenido(String id, String titulo, String descripcion, String idCreador,
             ArrayList<Visualizacion> visualizaciones,
-            ArrayList<Like> likes, List<String> comentarios, double donaciones, String imagePath) {
+            ArrayList<Like> likes, List<Comentario> comentarios, double donaciones, String imagePath) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -49,8 +49,8 @@ public class Contenido implements Serializable {
         this.imagePath = imagePath;
     }
 
-    public void agregarComentario(String comentario, Usuario usuario) {
-        comentarios.add(usuario.getNombre() + ": " + comentario);
+    public void agregarComentario(Comentario comentario, Usuario usuario) {
+        comentarios.add(comentario);
     }
 
     public void agregarLike(String idUsuario, String idContenido) throws IOException {
@@ -154,11 +154,11 @@ public class Contenido implements Serializable {
         this.likes = likes;
     }
 
-    public List<String> getComentarios() {
+    public List<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(List<String> comentarios) {
+    public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 

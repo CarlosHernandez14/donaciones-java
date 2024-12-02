@@ -53,7 +53,7 @@ public class Administrador extends Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Administrador{" + "idAdministrador=" + idAdministrador + '}';
+        return "Administrador{" + "idAdministrador=" + idAdministrador + '}' + super.toString();
     }
     
     

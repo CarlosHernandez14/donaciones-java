@@ -22,6 +22,7 @@ public class CreadorContenido extends Usuario implements Serializable {
     private ArrayList<String> suscriptores; // Guarda el id de los usuarios suscritos
     private boolean partner;
 
+    // CONSTRUCTOR DE LECTURA
     public CreadorContenido(String idCreador, String idUsuario, String nombre, String email, String contrasena) {
         super(idUsuario, nombre, email, contrasena);
         this.idCreador = idCreador;
@@ -174,12 +175,20 @@ public class CreadorContenido extends Usuario implements Serializable {
     public void setPartner(boolean partner) {
         this.partner = partner;
     }
+    
+    public String getIdCreador() {
+        return idCreador;
+    }
+
+    public void setIdCreador(String idCreador) {
+        this.idCreador = idCreador;
+    }
 
     @Override
     public String toString() {
-        return super.toString() + "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada="
-                + cuentaBloqueada
-                + ", suscriptores=" + suscriptores + '}';
+        return  "CreadorContenido{" + "contenidos=" + contenidos + ", cuentaBloqueada="
+                + cuentaBloqueada + ", partner=" + partner
+                + ", suscriptores=" + suscriptores + '}' + super.toString();
     }
-
+    
 }
