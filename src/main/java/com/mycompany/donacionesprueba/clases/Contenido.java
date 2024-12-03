@@ -48,9 +48,22 @@ public class Contenido implements Serializable {
         this.donaciones = donaciones;
         this.imagePath = imagePath;
     }
+    
+    // Constructor para hacer updates
+    public Contenido(String id, String titulo, String descripcion, String idCreador, double donaciones, String imagePath) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.idCreador = idCreador;
+        this.visualizaciones = new ArrayList<>();
+        this.likes = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
+        this.donaciones = donaciones;
+        this.imagePath = imagePath;
+    }
 
-    public void agregarComentario(Comentario comentario, Usuario usuario) {
-        comentarios.add(comentario);
+    public void agregarComentario(String comentario, Usuario usuario) {
+        //comentarios.add(comentario);
     }
 
     public void agregarLike(String idUsuario, String idContenido) throws IOException {
@@ -180,9 +193,7 @@ public class Contenido implements Serializable {
 
     @Override
     public String toString() {
-        return "Contenido{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", creador=" + idCreador
-                + ", visualizaciones=" + visualizaciones + ", likes=" + likes + ", comentarios=" + comentarios
-                + ", donaciones=" + donaciones + '}';
+        return "Contenido{" + "id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", idCreador=" + idCreador + ", visualizaciones=" + visualizaciones + ", likes=" + likes + ", comentarios=" + comentarios + ", donaciones=" + donaciones + ", imagePath=" + imagePath + '}';
     }
 
 }

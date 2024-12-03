@@ -81,13 +81,11 @@ try {
 
         case 'DELETE':
             // Eliminar un contenido existente
-            $input = json_decode(file_get_contents('php://input'), true);
-
-            if (!isset($input['idContenido'])) {
+            if (!isset($_GET['idContenido'])) {
                 throw new Exception("Falta el ID del contenido a eliminar");
             }
 
-            $id = $input['idContenido'];
+            $id = $_GET['idContenido'];
 
             $result = $db->deleteContent($id);
 
@@ -96,7 +94,6 @@ try {
                 'message' => 'Contenido eliminado correctamente',
                 'data' => $result
             ]);
-
             break;
 
         default:
@@ -108,6 +105,3 @@ try {
         'message' => $e->getMessage()
     ]);
 }
-
-
-?>

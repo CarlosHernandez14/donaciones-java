@@ -209,30 +209,40 @@ public class WSManager {
     }
 
     // Metodo para guardar un usuario
-    public static boolean guardarUsuario(Usuario user) {
+    public static String guardarUsuario(Usuario user) {
         String endpoint = WSManager.URL + "users.php";
+
+        System.out.println("USUARIO A GUARDAR: " + user.toString());
+
+        JSONObject jsonUserRequest = new JSONObject();
+        jsonUserRequest.put("nombre", user.getNombre());
+        jsonUserRequest.put("correo", user.getCorreo());
+        jsonUserRequest.put("contrasena", hashSHA1(user.getContrasena()));
 
         try {
             String result = Request.Post(endpoint)
-                    .bodyForm(Form.form()
-                            .add("nombre", user.getNombre())
-                            .add("correo", user.getCorreo())
-                            .add("contrasena", user.getContrasena())
-                            .build())
-                    .execute().returnContent().asString();
+                .bodyString(jsonUserRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
 
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(result);
 
-            return Boolean.parseBoolean(json.get("OK").toString());
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
 
         } catch (IOException ex) {
             System.out.println("Error al guardar el usuario:" + ex.getMessage());
         } catch (ParseException ex) {
             System.out.println("Error al guardar el usuario:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el usuario:" + ex.getMessage());
         }
 
-        return false;
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -330,6 +340,45 @@ public class WSManager {
         return null;
     }
 
+    // Metodo para guardar un creador de contenido
+    public static String guardarCreadorContenido(CreadorContenido creator) {
+        String endpoint = WSManager.URL + "creators.php";
+
+        try {
+
+            // Creamos primero el usuario para despues crear el creador
+            String createUserResponse = WSManager.guardarUsuario((Usuario) creator);
+            if (createUserResponse == null) {
+                throw new Exception("No se pudo crear el usuario asociado al creador");
+            }
+
+            JSONObject jsonCreatorRequest = new JSONObject();
+            jsonCreatorRequest.put("idUsuario", createUserResponse);
+            String result = Request.Post(endpoint)
+                .bodyString(jsonCreatorRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar el creador:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar el creador:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el creador:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     // METODOS PARA MANEJO DE ADMINISTRADORES
 
@@ -382,6 +431,45 @@ public class WSManager {
         return null;
     }
 
+    // Metodo para crear un administrador
+    public static String guardarAdministrador(Administrador admin) {
+        String endpoint = WSManager.URL + "admins.php";
+
+        try {
+
+            // Creamos primero el usuario para despues crear el admin
+            String createUserResponse = WSManager.guardarUsuario((Usuario) admin);
+            if (createUserResponse == null) {
+                throw new Exception("No se pudo crear el usuario asociado al admin");
+            }
+
+            JSONObject jsonAdminRequest = new JSONObject();
+            jsonAdminRequest.put("idUsuario", createUserResponse);
+            String result = Request.Post(endpoint)
+                .bodyString(jsonAdminRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar el admin:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar el admin:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el admin:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     // METODOS PARA MANEJO DE CONTENIDOS DEL WEBSERVICE
 
@@ -418,7 +506,7 @@ public class WSManager {
                 // Obtenemos el creador asociado al contenido
 
                 CreadorContenido creator = WSManager.obtenerCreadorContenido(creatorId);
-                
+
                 // Obtenemos los comentarios
                 List<Comentario> comentarios = WSManager.getComentarios(contentId);
                 // Obtenemos las visualizaciones
@@ -427,7 +515,8 @@ public class WSManager {
                 List<Like> likes = WSManager.getLikes(contentId);
 
                 // Creamos el contenido
-                Contenido content = new Contenido(contentId, title, description, creatorId, (ArrayList<Visualizacion>) visualizaciones, (ArrayList<Like>) likes,
+                Contenido content = new Contenido(contentId, title, description, creatorId,
+                        (ArrayList<Visualizacion>) visualizaciones, (ArrayList<Like>) likes,
                         comentarios, donaciones, imagePath);
 
                 contents.add(content);
@@ -441,6 +530,114 @@ public class WSManager {
             System.out.println("Error al obtener los contenidos:" + ex.getMessage());
         } catch (Exception ex) {
             System.out.println("Error al obtener los contenidos:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para guardar un contenido
+    public static String guardarContenido(Contenido content) {
+        String endpoint = WSManager.URL + "contents.php";
+
+        try {
+            JSONObject jsonContentRequest = new JSONObject();
+            jsonContentRequest.put("titulo", content.getTitulo());
+            jsonContentRequest.put("descripcion", content.getDescripcion());
+            jsonContentRequest.put("idCreador", content.getIdCreador());
+            jsonContentRequest.put("donaciones", content.getDonaciones());
+            jsonContentRequest.put("image_path", content.getImagePath());
+
+            String result = Request.Post(endpoint)
+                .bodyString(jsonContentRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar el contenido:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar el contenido:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el contenido:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para actualizar un contenido
+    public static String actualizarContenido(Contenido content) {
+        String endpoint = WSManager.URL + "contents.php";
+
+        System.out.println("Content to update: " + content.toString());
+        
+        try {
+            JSONObject jsonContentRequest = new JSONObject();
+            jsonContentRequest.put("idContenido", content.getId());
+            jsonContentRequest.put("titulo", content.getTitulo());
+            jsonContentRequest.put("descripcion", content.getDescripcion());
+            jsonContentRequest.put("idCreador", content.getIdCreador());
+            jsonContentRequest.put("donaciones", content.getDonaciones());
+            jsonContentRequest.put("image_path", content.getImagePath());
+            
+            System.out.println("SOLICITUD JSON: " + jsonContentRequest.toString());
+
+            String result = Request.Put(endpoint)
+                .bodyString(jsonContentRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al actualizar el contenido:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error de parseo al actualizar el contenido:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al actualizar el contenido:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para eliminar un contenido
+    public static String eliminarContenido(String contentId) {
+        String endpoint = WSManager.URL + "contents.php?idContenido=" + contentId;
+
+        try {
+            String result = Request.Delete(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al eliminar el contenido:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al parsear al eliminar el contenido:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al eliminar el contenido:" + ex.getMessage());
         }
 
         return null;

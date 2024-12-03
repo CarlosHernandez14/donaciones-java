@@ -4,6 +4,7 @@
  */
 package com.mycompany.donacionesprueba.vistas;
 
+import com.mycompany.donacionesprueba.clases.Comentario;
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.dao.Dao;
@@ -42,10 +43,10 @@ public class CommentsForm extends javax.swing.JFrame {
         this.containerComments.removeAll();
 
         // Seteamos los comentarios
-        for (String comentario : contenido.getComentarios()) {
+        for (Comentario comentario : contenido.getComentarios()) {
             // Agregamos un panel de comentario
 
-            PanelComment panelComment = new PanelComment(comentario);
+            PanelComment panelComment = new PanelComment(comentario.getComentario());
 
             // Agregamos el comentario al panel
 //            panelComment.setMaximumSize(containerComments.getPreferredSize());

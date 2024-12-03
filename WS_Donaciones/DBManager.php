@@ -458,7 +458,7 @@
 
             if (!$currentContent) {
                 $this->close($link);
-                die("El contenido no existe");
+                throw new Exception("El contenido no existe");
             }
 
             // Si no se envía un campo, se mantiene el valor actual
