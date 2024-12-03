@@ -379,6 +379,45 @@ public class WSManager {
         return null;
     }
 
+    // Metodo para actualizar un creador de contenido
+    public static String actualizarCreadorContenido(CreadorContenido creator) {
+        String endpoint = WSManager.URL + "creators.php";
+
+        try {
+            JSONObject jsonCreatorRequest = new JSONObject();
+            jsonCreatorRequest.put("idCreador", creator.getIdCreador());
+            jsonCreatorRequest.put("cuenta_bloqueada", creator.isCuentaBloqueada());
+            jsonCreatorRequest.put("partner", creator.isPartner());
+            
+//            System.out.println("REQUEST TO SEND:");
+//            System.out.println(jsonCreatorRequest.toString());
+
+            String result = Request.Put(endpoint)
+                .bodyString(jsonCreatorRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String message = (String) json.get("message");
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + message + "ERROR:(" + errorMessage + ")" );
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al actualizar el creador:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error de parseo al actualizar el creador:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al actualizar el creador:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     // METODOS PARA MANEJO DE ADMINISTRADORES
 
@@ -730,6 +769,45 @@ public class WSManager {
         String endpoint = WSManager.URL + "likes.php?idLike=" + likeId;
 
         try {
+            String result = Request.Delete(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al eliminar el like:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al parsear al eliminar el like:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al eliminar el like:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para eliminar like por id de usuario y contenido
+    public static String eliminarLike(String userId, String contentId) {
+        String endpoint = WSManager.URL + "likes.php?idLike=";
+
+        try {
+
+            List<Like> likes = WSManager.getLikes(contentId);
+
+            for (Like like : likes) {
+                if (like.getIdUsuario().equals(userId)) {
+                    endpoint += like.getIdLike();
+                    break;
+                }
+            }
+
             String result = Request.Delete(endpoint)
                     .execute().returnContent().asString();
 

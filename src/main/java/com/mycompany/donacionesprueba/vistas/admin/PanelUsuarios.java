@@ -6,7 +6,8 @@ package com.mycompany.donacionesprueba.vistas.admin;
 
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
-import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -57,8 +58,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private double calcularTotalDonaciones() {
         try {
             // Obtenemos los contenidos del influencer
-            List<Contenido> contenidos = Dao.obtenerContenidos();
-
+            //List<Contenido> contenidos = Dao.obtenerContenidos();
+            List<Contenido> contenidos = WSManager.obtenerContenidos();
+            
             // Variable para almacenar el total de donaciones
             double totalDonaciones = 0;
 
@@ -85,8 +87,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private double calcularPromedioLikes() {
         try {
             // Obtenemos los contenidos del influencer
-            List<Contenido> contenidos = Dao.obtenerContenidos();
-
+            //List<Contenido> contenidos = Dao.obtenerContenidos();
+            List<Contenido> contenidos = WSManager.obtenerContenidos();
+            
             // Filtramos los contenidos del influencer
             List<Contenido> contenidosInfluencer = new ArrayList<>();
             for (Contenido contenido : contenidos) {
@@ -122,8 +125,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private double calcularPromedioVisualizaciones() {
         try {
             // Obtenemos los contenidos del influencer
-            List<Contenido> contenidos = Dao.obtenerContenidos();
-
+            //List<Contenido> contenidos = Dao.obtenerContenidos();
+            List<Contenido> contenidos = WSManager.obtenerContenidos();
+            
             // Filtramos los contenidos del influencer
             List<Contenido> contenidosInfluencer = new ArrayList<>();
             for (Contenido contenido : contenidos) {
@@ -284,7 +288,8 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 this.influencer.setPartner(false);
 
                 // Guardamos en el json db
-                Dao.actualizarCreadorContenido(influencer);
+                //Dao.actualizarCreadorContenido(influencer);
+                WSManager.actualizarCreadorContenido(influencer);
                 
                 // Si todo salio bien mostramos mensaje de exito
                 JOptionPane.showMessageDialog(null, "Se elimino el partener correctamente");
@@ -293,7 +298,8 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 this.influencer.setPartner(true);
                 
                 // Guardamos en la db
-                Dao.actualizarCreadorContenido(influencer);
+                //Dao.actualizarCreadorContenido(influencer);
+                WSManager.actualizarCreadorContenido(influencer);
                 // Mensaje de exito
                 JOptionPane.showMessageDialog(null, "Se actualizo a partner con exito");
             }

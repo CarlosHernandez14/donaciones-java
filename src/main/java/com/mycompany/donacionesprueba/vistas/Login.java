@@ -7,7 +7,8 @@ package com.mycompany.donacionesprueba.vistas;
 import com.mycompany.donacionesprueba.clases.Administrador;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
-import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.vistas.admin.HomeAdminForm;
 import com.mycompany.donacionesprueba.vistas.influencer.HomeInfluencerForm;
 import javax.swing.JOptionPane;
@@ -277,8 +278,9 @@ public class Login extends javax.swing.JFrame {
         String contrasena = new String(this.fieldPassword.getPassword());
 
         // Verificamos al usuario
-        Usuario usuario = Dao.verificarUsuario(correo, contrasena);
-
+        //Usuario usuario = Dao.verificarUsuario(correo, contrasena);
+        Usuario usuario = WSManager.verificarUsuario(correo, contrasena);
+        
         if (usuario != null) {
             // Verficiamos el tipo del usuario si es Usuario, CrearContenido o Administrador
             if (usuario instanceof Administrador) {

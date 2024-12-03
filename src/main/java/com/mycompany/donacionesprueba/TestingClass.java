@@ -106,12 +106,11 @@ public class TestingClass {
         // System.out.println(commentResponse != null ? commentResponse : "error, no se
         // guardo el comentario" );
         // Agregamos un like
-        // Like like = new Like("9a2eec97-b009-11ef-a2bf-04d4c447d499",
-        // "feec39ce-b02b-11ef-a2bf-04d4c447d499");
-        // String likeResponse = WSManager.guardarLike(like);
-        // System.out.println("Like guardado:");
-        // System.out.println(likeResponse != null ? likeResponse : "error, no se guardo
-        // el like");
+        //  Like like = new Like("9a2eec97-b009-11ef-a2bf-04d4c447d499",
+        //  "feec39ce-b02b-11ef-a2bf-04d4c447d499");
+        //  String likeResponse = WSManager.guardarLike(like);
+        //  System.out.println("Like guardado:");
+        //  System.out.println(likeResponse != null ? likeResponse : "error, no se guardo el like");
 
         // Eliminar like
         // String likeResponse = WSManager.eliminarLike("4320ccb5-b18d-11ef-901f-04d4c447d499");
@@ -134,14 +133,25 @@ public class TestingClass {
         // System.out.println(suscripcionResponse != null ? suscripcionResponse : "error, no se elimino la suscripcion");
 
         // Guardar una visualizacion
-        Visualizacion visualizacion = new Visualizacion("49f7d416-b12b-11ef-9ce4-04d4c447d499",
-                "feec39ce-b02b-11ef-a2bf-04d4c447d499");
-        String visualizacionResponse = WSManager.guardarVisualizacion(visualizacion);
+//        Visualizacion visualizacion = new Visualizacion("49f7d416-b12b-11ef-9ce4-04d4c447d499",
+//                "feec39ce-b02b-11ef-a2bf-04d4c447d499");
+//        String visualizacionResponse = WSManager.guardarVisualizacion(visualizacion);
+//
+//        System.out.println("Visualizacion guardada:");
+//
+//        System.out.println(visualizacionResponse != null ? visualizacionResponse : "error, no se guardo la visualizacion");
 
-        System.out.println("Visualizacion guardada:");
+        
+        // Eliminar like por id de usuario y contenido
+        // String likeDeleteResponse = WSManager.eliminarLike("9a2eec97-b009-11ef-a2bf-04d4c447d499", "feec39ce-b02b-11ef-a2bf-04d4c447d499");
+        // System.out.println("Like eliminado:");
+        // System.out.println(likeDeleteResponse != null ? likeDeleteResponse : "error, no se elimino el like");
 
-        System.out.println(visualizacionResponse != null ? visualizacionResponse : "error, no se guardo la visualizacion");
-
+        // Actualizar creador de contenido
+        CreadorContenido creadorUpdate = new  CreadorContenido("49fcf6cf-b12b-11ef-9ce4-04d4c447d499", false , false);
+        String creadorUpdateResponse = WSManager.actualizarCreadorContenido(creadorUpdate);
+        System.out.println("Creador actualizado:");
+        System.out.println(creadorUpdateResponse != null ? creadorUpdateResponse : "error, no se actualizo el creador");
 
     }
 }

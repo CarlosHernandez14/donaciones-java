@@ -10,7 +10,8 @@ import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Like;
 import com.mycompany.donacionesprueba.clases.Usuario;
 import com.mycompany.donacionesprueba.clases.Visualizacion;
-import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.vistas.CommentsForm;
 import com.mycompany.donacionesprueba.vistas.admin.HomeAdminForm;
 
@@ -78,8 +79,9 @@ public class PanelContenido extends javax.swing.JPanel {
 
             // Verificamos si el usuario esta suscrito al creador del contenido
             // Obtenemos al creador del contenido
-            this.creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
-
+            //this.creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
+            this.creador = WSManager.obtenerCreadorContenido(contenido.getIdCreador());
+            
             // Verificamos si el usuario esta suscrito al creador
 
             // Si el usuario esta suscrito al creador, cambiamos el texto del boton de suscribirse
@@ -423,8 +425,8 @@ public class PanelContenido extends javax.swing.JPanel {
             // TODO add your handling code here:
             
             // Eliminamos el contenido
-            Dao.eliminarContenido(this.contenido.getId());
-            
+            //Dao.eliminarContenido(this.contenido.getId());
+            WSManager.eliminarContenido(this.contenido.getId());
             
             // Actualizamos la UI de HomeInfluencer o Admin
             if (this.homeInfluecerForm != null) {
@@ -432,7 +434,7 @@ public class PanelContenido extends javax.swing.JPanel {
             } else if(this.homeAdminForm != null) {
                 this.homeAdminForm.LoadContent();
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             
             JOptionPane.showMessageDialog(null, "No se pudo eliminar el contenido");

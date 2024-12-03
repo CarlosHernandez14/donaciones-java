@@ -8,7 +8,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.google.gson.reflect.TypeToken;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
-import com.mycompany.donacionesprueba.dao.Dao;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.dao.GenericDao;
 import com.mycompany.donacionesprueba.vistas.Login;
 import java.util.ArrayList;

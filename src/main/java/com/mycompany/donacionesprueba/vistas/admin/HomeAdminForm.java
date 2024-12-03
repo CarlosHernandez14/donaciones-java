@@ -7,8 +7,9 @@ package com.mycompany.donacionesprueba.vistas.admin;
 import com.mycompany.donacionesprueba.clases.Administrador;
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
-import com.mycompany.donacionesprueba.dao.Dao;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.dao.DataExport;
+import com.mycompany.donacionesprueba.dao.WSManager;
 import com.mycompany.donacionesprueba.vistas.Login;
 import com.mycompany.donacionesprueba.vistas.influencer.PanelContenido;
 import java.util.ArrayList;
@@ -303,7 +304,8 @@ public class HomeAdminForm extends javax.swing.JFrame {
 
         try {
             // Obtenemos todos los creadores
-            List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            //List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            List<CreadorContenido> creadores = WSManager.obtenerCreadoresContenido();
             
             List<CreadorContenido> partners = new ArrayList<>();
             // Filtramos los que son partners
@@ -328,7 +330,8 @@ public class HomeAdminForm extends javax.swing.JFrame {
         
         try {
             // Obtenemos todos los creadores
-            List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            //List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+            List<CreadorContenido> creadores = WSManager.obtenerCreadoresContenido();
             
             List<CreadorContenido> topCreadores = new ArrayList<>();
             
@@ -364,14 +367,16 @@ public class HomeAdminForm extends javax.swing.JFrame {
         this.containerPosts.removeAll();
 
         // Cargar publicaciones del influencer
-        List<Contenido> contenidos = Dao.obtenerContenidos();
-
+        //List<Contenido> contenidos = Dao.obtenerContenidos();
+        List<Contenido> contenidos = WSManager.obtenerContenidos();
+        
         // Vamos agregando PanelContenido a containerPosts
         for (Contenido contenido : contenidos) {
 
             //Consultamos al influencer que creo elcontenido
-            CreadorContenido creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
-
+            //CreadorContenido creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
+            CreadorContenido creador = WSManager.obtenerCreadorContenido(contenido.getIdCreador()); 
+            
             PanelContenido panelContenido = new PanelContenido(contenido, creador, null, this);
             // Seteamos el size del panel para que se ajuste al tamaño del container
             panelContenido.setMaximumSize(panelContenido.getPreferredSize());
@@ -389,8 +394,9 @@ public class HomeAdminForm extends javax.swing.JFrame {
         this.containerPosts.removeAll();
 
         // Cargamos los usuarios creadores
-        List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
-
+        //List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
+        List<CreadorContenido> creadores = WSManager.obtenerCreadoresContenido();
+        
         for (CreadorContenido creador : creadores) {
             // Creamos los paneles de usuario
             PanelUsuarios panelUser = new PanelUsuarios(creador);

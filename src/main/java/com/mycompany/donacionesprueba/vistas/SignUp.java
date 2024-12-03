@@ -9,7 +9,8 @@ import javax.swing.JOptionPane;
 
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
-import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
+//import com.mycompany.donacionesprueba.dao.Dao;
 
 /**
  *
@@ -17,14 +18,14 @@ import com.mycompany.donacionesprueba.dao.Dao;
  */
 public class SignUp extends javax.swing.JFrame {
 
-    private Dao dao;
+    //private Dao dao;
 
     /**
      * Creates new form Signup
      */
     public SignUp() {
         initComponents();
-        this.dao = new Dao();
+        //this.dao = new Dao();
         this.setLocationRelativeTo(null);
     }
 
@@ -372,19 +373,23 @@ public class SignUp extends javax.swing.JFrame {
                 Usuario usuario = new Usuario(Usuario.generarId(), nombre, correo, contrasena);
 
                 // Guardamos el usuario
-                Dao.guardarUsuario(usuario);
-
+                //Dao.guardarUsuario(usuario);
+                WSManager.guardarUsuario(usuario);
+                
             } else if (tipoUsuario.equals("Creador de Contenido")) {
                 // Creamos un nuevo creador de contenido
                 CreadorContenido creadorContenido = new CreadorContenido(nombre, correo,
                         contrasena);
                 // Guardamos el creador de contenido
-                Dao.guardarCreadorContenido(creadorContenido);
+                //Dao.guardarCreadorContenido(creadorContenido);
+                WSManager.guardarCreadorContenido(creadorContenido);
+                
             } else if (tipoUsuario.equals("Administrador")){
                 // Creamos un admnistrador
                 Administrador admin = new Administrador(nombre, correo, contrasena);
                 // Guardamos al admin en la db
-                Dao.guardarAdministrador(admin);
+                //Dao.guardarAdministrador(admin);
+                WSManager.guardarAdministrador(admin);
             }
 
             // Si todo sale bien mostramos un mensaje de exito

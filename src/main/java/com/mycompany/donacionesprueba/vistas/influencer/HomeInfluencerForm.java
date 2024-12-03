@@ -11,7 +11,8 @@ import javax.swing.BoxLayout;
 
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.CreadorContenido;
-import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.vistas.Login;
 
 /**
@@ -51,7 +52,8 @@ public class HomeInfluencerForm extends javax.swing.JFrame {
         this.containerPosts.removeAll();
 
         // Cargar publicaciones del influencer
-        List<Contenido> contenidos = Dao.obtenerContenidos();
+        //List<Contenido> contenidos = Dao.obtenerContenidos();
+        List<Contenido> contenidos = WSManager.obtenerContenidos();
 
         // Vamos agregando PanelContenido a containerPosts
         for (Contenido contenido : contenidos) {

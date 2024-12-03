@@ -4,7 +4,8 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
-import com.mycompany.donacionesprueba.dao.Dao;
+//import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +47,16 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.suscriptores = new ArrayList<>();
         this.cuentaBloqueada = false;
     }
+    
+    // CONSTRUCTOR PARA UPDATE
 
+    public CreadorContenido(String idCreador, boolean cuentaBloqueada, boolean partner) {
+        this.idCreador = idCreador;
+        this.cuentaBloqueada = cuentaBloqueada;
+        this.partner = partner;
+    }
+    
+    
     public void crearContenido(String titulo, String descripcion, String imagePath) throws Exception {
         try {
 
@@ -58,10 +68,12 @@ public class CreadorContenido extends Usuario implements Serializable {
             contenidos.add(nuevoContenido);
 
             // Actualizamos la base de datos
-            Dao.guardarContenido(nuevoContenido);
+            //Dao.guardarContenido(nuevoContenido);
+            WSManager.guardarContenido(nuevoContenido);
 
             // Actualizamos los datos de CreadorContenido en la DB
-            Dao.actualizarCreadorContenido(this);
+            //Dao.actualizarCreadorContenido(this);
+            
 
         } catch (Exception e) {
             // Propagamos la excepción
@@ -77,7 +89,8 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.suscriptores.add(idUsuario);
 
         // Actualizamos los datos de CreadorContenido en la DB
-        Dao.actualizarCreadorContenido(this);
+        //Dao.actualizarCreadorContenido(this);
+        WSManager.guardarSuscripcion(idUsuario, this.getIdCreador());
     }
 
     // Metodo para eliminar suscriptores
@@ -87,7 +100,8 @@ public class CreadorContenido extends Usuario implements Serializable {
         this.suscriptores.remove(idUsuario);
 
         // Actualizamos los datos de CreadorContenido en la DB
-        Dao.actualizarCreadorContenido(this);
+        //Dao.actualizarCreadorContenido(this);
+        WSManager.eliminarSuscripcion(idUsuario, this.getIdCreador());
     }
 
     public void verificarActividad() {
@@ -101,8 +115,9 @@ public class CreadorContenido extends Usuario implements Serializable {
     public Double obtenerTotalDonaciones() {
         try {
             // Obtenemos los contenidos del creador
-            List<Contenido> contenidos = Dao.obtenerContenidos();
-
+            //List<Contenido> contenidos = Dao.obtenerContenidos();
+            List<Contenido> contenidos = WSManager.obtenerContenidos();
+            
             List<Contenido> contenidosCreador = new ArrayList<>();
 
             // Filtramos los contenidos del creador

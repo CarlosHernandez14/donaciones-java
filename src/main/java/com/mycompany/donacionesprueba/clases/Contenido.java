@@ -4,7 +4,7 @@
  */
 package com.mycompany.donacionesprueba.clases;
 
-import com.mycompany.donacionesprueba.dao.Dao;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import com.mycompany.donacionesprueba.dao.WSManager;
 import java.io.IOException;
 import java.io.Serializable;
@@ -77,7 +77,8 @@ public class Contenido implements Serializable {
 
         // Actualizamos el contenido con los nuevos likes en la db
 
-        Dao.actualizarContenido(this);
+        //Dao.actualizarContenido(this);
+        WSManager.guardarLike(like);
     }
 
     // Metdodo para eliminar un like
@@ -90,7 +91,7 @@ public class Contenido implements Serializable {
         }
 
         // Actualizamos el contenido con los likes eliminados en la db
-        Dao.actualizarContenido(this);
+        WSManager.eliminarLike(idUsuario, idContenido);
     }
 
     // Metodo para agrear una visualizacion
@@ -99,14 +100,16 @@ public class Contenido implements Serializable {
         visualizaciones.add(visualizacion);
 
         // Actualizamos el contenido con las nuevas visualizaciones en la db
-        Dao.actualizarContenido(this);
+        //Dao.actualizarContenido(this);
+        WSManager.guardarVisualizacion(visualizacion);
     }
 
     public void recibirDonacion(double cantidad) throws IOException {
         donaciones += cantidad;
 
         // Actualizamos el contenido con la nueva cantidad de donaciones en la db
-        Dao.actualizarContenido(this);
+        //Dao.actualizarContenido(this);
+        WSManager.actualizarContenido(this);
     }
 
     // Metodo para generar un id unico para el contenido que incluya letras y
