@@ -5,6 +5,7 @@
 package com.mycompany.donacionesprueba.clases;
 
 import com.mycompany.donacionesprueba.dao.Dao;
+import com.mycompany.donacionesprueba.dao.WSManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,7 +64,11 @@ public class Contenido implements Serializable {
     }
 
     public void agregarComentario(String comentario, Usuario usuario) {
-        //comentarios.add(comentario);
+        Comentario comment = new Comentario(usuario.getId(), this.id, comentario);
+        comentarios.add(comment);
+        
+        // Guardamos el comentario en la db
+        
     }
 
     public void agregarLike(String idUsuario, String idContenido) throws IOException {

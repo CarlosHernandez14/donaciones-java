@@ -80,13 +80,11 @@ try {
             
         case 'DELETE':
             // Eliminar un like existente
-            $input = json_decode(file_get_contents('php://input'), true);
-
-            if (!isset($input['idLike'])) {
+            if (!isset($_GET['idLike'])) {
                 throw new Exception("Faltan datos necesarios para eliminar el like");
             }
 
-            $id = $input['idLike'];
+            $id = $_GET['idLike'];
 
             $result = $db->deleteLike($id);
 

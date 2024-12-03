@@ -691,6 +691,69 @@ public class WSManager {
         return null;
     }
 
+    // Metodo para guardar un like
+    public static String guardarLike(Like like) {
+        String endpoint = WSManager.URL + "likes.php";
+
+        try {
+            JSONObject jsonLikeRequest = new JSONObject();
+            jsonLikeRequest.put("idUsuario", like.getIdUsuario());
+            jsonLikeRequest.put("idContenido", like.getIdContenido());
+
+            String result = Request.Post(endpoint)
+                .bodyString(jsonLikeRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar el like:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar el like:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el like:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para eliminar un like
+    public static String eliminarLike(String likeId) {
+        String endpoint = WSManager.URL + "likes.php?idLike=" + likeId;
+
+        try {
+            String result = Request.Delete(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al eliminar el like:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al parsear al eliminar el like:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al eliminar el like:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
     /////////////////////////////////////////////////////////////////////////////
     // METODOS PARA EL MANEJO DE COMENTARIOS
     // Metodo para obtener los comentarios
@@ -734,6 +797,70 @@ public class WSManager {
             System.out.println("Error al obtener los comentarios:" + ex.getMessage());
         } catch (Exception ex) {
             System.out.println("Error al obtener los comentarios:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para guardar un comentario
+    public static String guardarComentario(Comentario comment) {
+        String endpoint = WSManager.URL + "comments.php";
+
+        try {
+            JSONObject jsonCommentRequest = new JSONObject();
+            jsonCommentRequest.put("idUsuario", comment.getIdUsuario());
+            jsonCommentRequest.put("idContenido", comment.getIdContenido());
+            jsonCommentRequest.put("comentario", comment.getComentario());
+
+            String result = Request.Post(endpoint)
+                .bodyString(jsonCommentRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar el comentario:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar el comentario:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar el comentario:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para eliminar un comentario
+    public static String eliminarComentario(String commentId) {
+        String endpoint = WSManager.URL + "comments.php?idComentario=" + commentId;
+
+        try {
+            String result = Request.Delete(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al eliminar el comentario:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al parsear al eliminar el comentario:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al eliminar el comentario:" + ex.getMessage());
         }
 
         return null;
@@ -784,6 +911,237 @@ public class WSManager {
             System.out.println("Error al obtener las visualizaciones:" + ex.getMessage());
         } catch (Exception ex) {
             System.out.println("Error al obtener las visualizaciones:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para guardar una visualizacion
+    public static String guardarVisualizacion(Visualizacion view) {
+        String endpoint = WSManager.URL + "views.php";
+
+        try {
+            JSONObject jsonViewRequest = new JSONObject();
+            jsonViewRequest.put("idUsuario", view.getIdUsuario());
+            jsonViewRequest.put("idContenido", view.getIdContenido());
+
+            String result = Request.Post(endpoint)
+                .bodyString(jsonViewRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al guardar la visualizacion:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error de parseo al guardar la visualizacion:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar la visualizacion:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+    /// METODOS PARA EL MANEJO DE SUSCRIPCIONES
+    /// Metodo para obtener las suscripciones
+    // Suscripciones por id usuario
+    public static List<String> obtenerSuscripciones(String userId) {
+        String endpoint = WSManager.URL + "suscriptions.php?idUsuario=" + userId;
+
+        try {
+            List<String> subscriptions = new ArrayList<>();
+
+            String result = Request.Get(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            JSONArray data = (JSONArray) json.get("data");
+
+            for (Object object : data) {
+
+                JSONObject subscriptionJson = (JSONObject) object;
+
+                String idSubscription = (String) subscriptionJson.get("idSuscripcion");
+                String idUser = (String) subscriptionJson.get("idUsuario");
+                String idCreator = (String) subscriptionJson.get("idCreador");
+
+                subscriptions.add(idCreator);
+
+            }
+
+            return subscriptions;
+
+        } catch (IOException ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para obtner suscripciones por id creador
+    public static List<String> obtenerSuscripcionesPorCreador(String creatorId) {
+        String endpoint = WSManager.URL + "suscriptions.php?idCreador=" + creatorId;
+
+        try {
+            List<String> subscriptions = new ArrayList<>();
+
+            String result = Request.Get(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            JSONArray data = (JSONArray) json.get("data");
+
+            for (Object object : data) {
+
+                JSONObject subscriptionJson = (JSONObject) object;
+
+                String idSubscription = (String) subscriptionJson.get("idSuscripcion");
+                String idUser = (String) subscriptionJson.get("idUsuario");
+                String idCreator = (String) subscriptionJson.get("idCreador");
+
+                subscriptions.add(idUser);
+
+            }
+
+            return subscriptions;
+
+        } catch (IOException ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al obtener las suscripciones:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para guardar una suscripcion
+    public static String guardarSuscripcion(String userId, String creatorId) {
+        String endpoint = WSManager.URL + "suscriptions.php";
+
+        try {
+            JSONObject jsonSuscriptionRequest = new JSONObject();
+            jsonSuscriptionRequest.put("idUsuario", userId);
+            jsonSuscriptionRequest.put("idCreador", creatorId);
+
+            String result = Request.Post(endpoint)
+                .bodyString(jsonSuscriptionRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
+                .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return json.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("Error al guardar la suscripcion:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al guardar la suscripcion:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al guardar la suscripcion:" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // Metodo para eliminar una suscripcion por id de user y creator
+    public static String eliminarSuscripcion(String userId, String creatorId) {
+        // String endpointGet = WSManager.URL + "suscriptions.php";
+
+        try {   
+            // Consultamos primero la suscripcion para obtener el id
+            String endpoint = WSManager.URL + "suscriptions.php?idUsuario=" + userId;
+
+            String result = Request.Get(endpoint)
+                    .execute().returnContent().asString();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(result);
+
+            if (!Boolean.parseBoolean(json.get("OK").toString())) {
+                String errorMessage = (String) json.get("error");
+                throw new Exception("Error en la solicitud al obtener las suscripciones por idUsuario: " + errorMessage);
+            }
+
+            JSONArray data = (JSONArray) json.get("data");
+
+            String suscriptionId = null;
+
+            for (Object object : data) {
+
+                JSONObject subscriptionJson = (JSONObject) object;
+
+                String idSubscription = (String) subscriptionJson.get("idSuscripcion");
+                String idUser = (String) subscriptionJson.get("idUsuario");
+                String idCreator = (String) subscriptionJson.get("idCreador");
+
+                if (idUser.equals(userId) && idCreator.equals(creatorId)) {
+                    suscriptionId = idSubscription;
+                    break;
+                }
+
+            }
+
+            if (suscriptionId == null) {
+                throw new Exception("No se encontro la suscripcion");
+            }
+
+            // Eliminamos la suscripcion
+            String endpointDelete = WSManager.URL + "suscriptions.php?idSuscripcion=" + suscriptionId;
+
+            String resultDelete = Request.Delete(endpointDelete)
+                    .execute().returnContent().asString();
+
+            JSONParser parserDelete = new JSONParser();
+
+            JSONObject jsonDelete = (JSONObject) parserDelete.parse(resultDelete);
+
+            if (!Boolean.parseBoolean(jsonDelete.get("OK").toString())) {
+                String errorMessage = (String) jsonDelete.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage);
+            }
+
+            return jsonDelete.get("data").toString();
+
+        } catch (IOException ex) {
+            System.out.println("IO Error al eliminar la suscripcion:" + ex.getMessage());
+        } catch (ParseException ex) {
+            System.out.println("Error al parsear al eliminar la suscripcion:" + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error en la solicitud al eliminar la suscripcion:" + ex.getMessage());
         }
 
         return null;

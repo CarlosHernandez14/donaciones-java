@@ -76,13 +76,11 @@ try {
 
         case 'DELETE':
             // Eliminar una suscripción existente
-            $input = json_decode(file_get_contents('php://input'), true);
-
-            if (!isset($input['idSuscripcion'])) {
-                throw new Exception("Faltan datos necesarios para eliminar la suscripción");
+            if (!isset($_GET['idSuscripcion'])) {
+                throw new Exception("Falta el ID de la suscripción a eliminar");
             }
 
-            $id = $input['idSuscripcion'];
+            $id = $_GET['idSuscripcion'];
 
             $result = $db->deleteSubscription($id);
 

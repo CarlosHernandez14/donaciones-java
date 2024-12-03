@@ -80,15 +80,13 @@ try {
 
         case 'DELETE':
             // Eliminar una vista existente
-            $input = json_decode(file_get_contents('php://input'), true);
-
-            if (!isset($input['id'])) {
+            if (!isset($_GET['idVisualizacion'])) {
                 throw new Exception("Faltan datos necesarios para eliminar la vista");
             }
 
-            $id = $input['id'];
+            $id = $_GET['idVisualizacion'];
 
-            //$result = $db->deleteView($id);
+            //result = $db->deleteView($id);
 
             echo json_encode([
                 'OK' => true,

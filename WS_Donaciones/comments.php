@@ -81,13 +81,11 @@ try {
 
         case 'DELETE':
             // Eliminar un comentario existente
-            $input = json_decode(file_get_contents('php://input'), true);
-
-            if (!isset($input['id'])) {
+            if (!isset($_GET['idComentario'])) {
                 throw new Exception("Falta el ID del comentario a eliminar");
             }
 
-            $id = $input['id'];
+            $id = $_GET['idComentario'];
 
             //$result = $db->deleteComment($id);
 

@@ -22,12 +22,20 @@ public class CreadorContenido extends Usuario implements Serializable {
     private ArrayList<String> suscriptores; // Guarda el id de los usuarios suscritos
     private boolean partner;
 
-    // CONSTRUCTOR DE LECTURA
+    // CONSTRUCTOR DE LECTURA SIN ARRRAYLIST
     public CreadorContenido(String idCreador, String idUsuario, String nombre, String email, String contrasena) {
         super(idUsuario, nombre, email, contrasena);
         this.idCreador = idCreador;
         this.contenidos = new ArrayList<>();
         this.suscriptores = new ArrayList<>();
+        this.cuentaBloqueada = false;
+    }
+    // CONSTUCTRO DE LECTURA
+    public CreadorContenido(String idCreador, String idUsuario, String nombre, String email, String contrasena, ArrayList<Contenido> contenidos, ArrayList<String> suscriptores) {
+        super(idUsuario, nombre, email, contrasena);
+        this.idCreador = idCreador;
+        this.contenidos = contenidos;
+        this.suscriptores = suscriptores;
         this.cuentaBloqueada = false;
     }
     

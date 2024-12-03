@@ -921,7 +921,7 @@
                 return $subscriptions;
             } else {
                 $this->close($link);
-                die("Error al obtener las suscripciones");
+                throw new Exception("Error al obtener las suscripciones");
             }
         }
 
@@ -960,7 +960,7 @@
                 return $subscriptions;
             } else {
                 $this->close($link);
-                die("Error al obtener las suscripciones");
+                throw new Exception("Error al obtener las suscripciones");
             }
         }
 
@@ -982,7 +982,7 @@
                 return $subscriptions;
             } else {
                 $this->close($link);
-                die("Error al obtener las suscripciones");
+                throw new Exception("Error al obtener las suscripciones");
             }
         }
 
@@ -1028,7 +1028,7 @@
 
             if (!$currentSubscription) {
                 $this->close($link);
-                die("La suscripcion no existe");
+                throw new Exception("La suscripcion no existe");
             }
 
             // Eliminamos la suscripcion
@@ -1042,7 +1042,7 @@
                 return $id;
             } else {
                 $this->close($link);
-                die("Error al eliminar la suscripcion");
+                throw new Exception("Error al eliminar la suscripcion");
             }
         }
 
