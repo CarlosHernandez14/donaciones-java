@@ -148,10 +148,10 @@ public class TestingClass {
         // System.out.println(likeDeleteResponse != null ? likeDeleteResponse : "error, no se elimino el like");
 
         // Actualizar creador de contenido
-        CreadorContenido creadorUpdate = new  CreadorContenido("49fcf6cf-b12b-11ef-9ce4-04d4c447d499", false , false);
-        String creadorUpdateResponse = WSManager.actualizarCreadorContenido(creadorUpdate);
-        System.out.println("Creador actualizado:");
-        System.out.println(creadorUpdateResponse != null ? creadorUpdateResponse : "error, no se actualizo el creador");
+//        CreadorContenido creadorUpdate = new  CreadorContenido("49fcf6cf-b12b-11ef-9ce4-04d4c447d499", false , false);
+//        String creadorUpdateResponse = WSManager.actualizarCreadorContenido(creadorUpdate);
+//        System.out.println("Creador actualizado:");
+//        System.out.println(creadorUpdateResponse != null ? creadorUpdateResponse : "error, no se actualizo el creador");
 
     }
 }

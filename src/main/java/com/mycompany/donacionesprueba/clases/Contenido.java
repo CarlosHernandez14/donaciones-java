@@ -68,6 +68,7 @@ public class Contenido implements Serializable {
         comentarios.add(comment);
         
         // Guardamos el comentario en la db
+        WSManager.guardarComentario(comment);
         
     }
 

@@ -7,7 +7,7 @@ package com.mycompany.donacionesprueba.vistas;
 import com.mycompany.donacionesprueba.clases.Comentario;
 import com.mycompany.donacionesprueba.clases.Contenido;
 import com.mycompany.donacionesprueba.clases.Usuario;
-import com.mycompany.donacionesprueba.dao.Dao;
+//import com.mycompany.donacionesprueba.dao.Dao;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 
@@ -184,7 +184,7 @@ public class CommentsForm extends javax.swing.JFrame {
 
             // Guardamos en la db 
             
-            Dao.actualizarContenido(contenido);
+            //Dao.actualizarContenido(contenido);
             
             // Actualizamos la ui
             loadComments();
