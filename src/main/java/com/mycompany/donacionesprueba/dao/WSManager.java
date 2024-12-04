@@ -363,7 +363,8 @@ public class WSManager {
 
             if (!Boolean.parseBoolean(json.get("OK").toString())) {
                 String errorMessage = (String) json.get("error");
-                throw new Exception("Error en la solicitud: " + errorMessage);
+                String message = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage + message);
             }
 
             return json.get("data").toString();
@@ -595,7 +596,8 @@ public class WSManager {
 
             if (!Boolean.parseBoolean(json.get("OK").toString())) {
                 String errorMessage = (String) json.get("error");
-                throw new Exception("Error en la solicitud: " + errorMessage);
+                String message = (String) json.get("message");
+                throw new Exception("Error en la solicitud: " + errorMessage + message);
             }
 
             return json.get("data").toString();
