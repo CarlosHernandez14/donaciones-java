@@ -71,6 +71,8 @@ public class WSManager {
             // Generamos el hass sha1 para comparar las contrasenas
 
             String hashedPassword = hashSHA1(contrasena);
+            
+            System.out.println("HASHED PASS:" + hashedPassword);
 
             for (Object object : data) {
                 JSONObject userJson = (JSONObject) object;
@@ -217,9 +219,11 @@ public class WSManager {
         JSONObject jsonUserRequest = new JSONObject();
         jsonUserRequest.put("nombre", user.getNombre());
         jsonUserRequest.put("correo", user.getCorreo());
-        jsonUserRequest.put("contrasena", hashSHA1(user.getContrasena()));
+        jsonUserRequest.put("contrasena", user.getContrasena());
 
         try {
+            System.out.println("USER CREATE REQUEST:");
+            System.out.println(jsonUserRequest.toString());
             String result = Request.Post(endpoint)
                 .bodyString(jsonUserRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
                 .execute().returnContent().asString();
@@ -354,6 +358,8 @@ public class WSManager {
 
             JSONObject jsonCreatorRequest = new JSONObject();
             jsonCreatorRequest.put("idUsuario", createUserResponse);
+            System.out.println("POST CREATOR REQUEST:");
+            System.out.println(jsonCreatorRequest.toString());
             String result = Request.Post(endpoint)
                 .bodyString(jsonCreatorRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
                 .execute().returnContent().asString();
@@ -587,6 +593,8 @@ public class WSManager {
             jsonContentRequest.put("donaciones", content.getDonaciones());
             jsonContentRequest.put("image_path", content.getImagePath());
 
+            System.out.println("REQUEST CREATE CONTENT: " + jsonContentRequest.toString());
+            
             String result = Request.Post(endpoint)
                 .bodyString(jsonContentRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
                 .execute().returnContent().asString();
@@ -630,6 +638,9 @@ public class WSManager {
             
             System.out.println("SOLICITUD JSON: " + jsonContentRequest.toString());
 
+            System.out.println("REQUEST TO UPDATE CONTENT:");
+            System.out.println(jsonContentRequest.toString());
+            
             String result = Request.Put(endpoint)
                 .bodyString(jsonContentRequest.toString(), ContentType.APPLICATION_JSON) // Especificar el tipo de contenido como JSON
                 .execute().returnContent().asString();
@@ -977,7 +988,7 @@ public class WSManager {
                 String idUser = (String) viewJson.get("idUsuario");
 
                 // Creamos la visualizacion
-                Visualizacion view = new Visualizacion(idView, idContent, idUser);
+                Visualizacion view = new Visualizacion(idView, idUser, idContent);
 
                 visualizaciones.add(view);
 

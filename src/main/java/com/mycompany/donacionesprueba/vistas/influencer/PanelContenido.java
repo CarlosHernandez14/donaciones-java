@@ -69,6 +69,7 @@ public class PanelContenido extends javax.swing.JPanel {
 
             // Si el usuario ya visualizó el contenido ocultamos el boton de visualizar
             for (Visualizacion visualizacion : contenido.getVisualizaciones()) {
+                System.out.println(visualizacion.toString());
                 if (visualizacion.getIdUsuario().equals(usuario.getId())) {
                     this.btnVer.setVisible(false);
                 }

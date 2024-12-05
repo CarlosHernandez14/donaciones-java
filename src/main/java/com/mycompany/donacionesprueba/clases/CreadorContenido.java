@@ -64,7 +64,7 @@ public class CreadorContenido extends Usuario implements Serializable {
                 System.out.println("Cuenta bloqueada. No puedes crear contenido.");
                 return;
             }
-            Contenido nuevoContenido = new Contenido(titulo, descripcion, this.getId(), imagePath);
+            Contenido nuevoContenido = new Contenido(titulo, descripcion, this.getIdCreador(), imagePath);
             contenidos.add(nuevoContenido);
 
             // Actualizamos la base de datos

@@ -321,7 +321,7 @@ public class CreatePostForm extends javax.swing.JFrame {
             String imagePath = directory.getPath() + "/" + titulo + "." + format;
             System.out.println("Image path to create: " + imagePath);
             // Creamos el contenido
-            Contenido contenido = new Contenido(titulo, descripcion, influencer.getId(), imagePath);
+            Contenido contenido = new Contenido(titulo, descripcion, influencer.getIdCreador(), imagePath);
 
             // Guardamos el contenido en la DB
             influencer.crearContenido(titulo, descripcion, imagePath);
