@@ -273,6 +273,8 @@ public class WSManager {
 
             for (Object object : data) {
                 JSONObject creatorsJson = (JSONObject) object;
+                
+                //System.out.println("CREADOR:" + creatorsJson.toString());
 
                 String userId = (String) creatorsJson.get("idUsuario");
                 String creatorId = (String) creatorsJson.get("idCreador");
@@ -285,6 +287,13 @@ public class WSManager {
 
                 CreadorContenido creator = new CreadorContenido(creatorId, userId, user.getNombre(), user.getCorreo(),
                         user.getContrasena());
+                creator.setPartner(partner);
+                creator.setCuentaBloqueada(cuentaBloqueada);
+                
+                List<Contenido> contents = WSManager.obtenerContenidos();
+                creator.setContenidos((ArrayList<Contenido>) contents);
+                
+                //System.out.println("CREATOR TO GET:" + creator.toString());
 
                 creators.add(creator);
             }

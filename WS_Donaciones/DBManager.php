@@ -447,7 +447,7 @@
         }
 
         // Funcion para actualizar un contenido
-        public function updateContent($id, $titulo = null, $descripcion = null, $idCreador = null, $donaciones = null, $image_path = null) {
+        public function updateContent($id, $titulo = null, $descripcion = null, $donaciones = null, $image_path = null) {
             $link = $this->open();
 
             // Consultamos si el contenido existe
@@ -470,10 +470,6 @@
                 $descripcion = $currentContent['descripcion'];
             }
 
-            if (!$idCreador) {
-                $idCreador = $currentContent['idCreador'];
-            }
-
             if (!$donaciones) {
                 $donaciones = $currentContent['donaciones'];
             }
@@ -484,7 +480,7 @@
 
             // Actualizamos el contenido
 
-            $query = "UPDATE contenido SET titulo = '$titulo', descripcion = '$descripcion', idCreador = '$idCreador', donaciones = '$donaciones', image_path = '$image_path' WHERE idContenido = '$id'";
+            $query = "UPDATE contenido SET titulo = '$titulo', descripcion = '$descripcion', donaciones = '$donaciones', image_path = '$image_path' WHERE idContenido = '$id'";
             $result = mysqli_query($link, $query);
             
             if ($result) {

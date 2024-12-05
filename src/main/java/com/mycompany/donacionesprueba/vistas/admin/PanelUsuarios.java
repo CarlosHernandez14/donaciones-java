@@ -67,7 +67,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
             // Recorremos los contenidos
             for (Contenido contenido : contenidos) {
                 // Verificamos si el contenido pertenece al influencer
-                if (contenido.getIdCreador().equals(this.influencer.getId())) {
+                if (contenido.getIdCreador().equals(this.influencer.getIdCreador())) {
                     // Sumamos el total de donaciones
                     totalDonaciones += contenido.getDonaciones();
                 }
@@ -93,7 +93,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
             // Filtramos los contenidos del influencer
             List<Contenido> contenidosInfluencer = new ArrayList<>();
             for (Contenido contenido : contenidos) {
-                if (contenido.getIdCreador().equals(this.influencer.getId())) {
+                if (contenido.getIdCreador().equals(this.influencer.getIdCreador())) {
                     contenidosInfluencer.add(contenido);
                 }
             }
@@ -131,7 +131,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
             // Filtramos los contenidos del influencer
             List<Contenido> contenidosInfluencer = new ArrayList<>();
             for (Contenido contenido : contenidos) {
-                if (contenido.getIdCreador().equals(this.influencer.getId())) {
+                if (contenido.getIdCreador().equals(this.influencer.getIdCreador())) {
                     contenidosInfluencer.add(contenido);
                 }
             }

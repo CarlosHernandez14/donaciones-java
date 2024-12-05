@@ -307,6 +307,12 @@ public class HomeAdminForm extends javax.swing.JFrame {
             //List<CreadorContenido> creadores = Dao.obtenerCreadoresContenido();
             List<CreadorContenido> creadores = WSManager.obtenerCreadoresContenido();
             
+            System.out.println("CREADORES DESDE PDF:");
+            for (CreadorContenido creadore : creadores) {
+                System.out.println(creadore.toString());
+            }
+            System.out.println("=========================");
+            
             List<CreadorContenido> partners = new ArrayList<>();
             // Filtramos los que son partners
             for (CreadorContenido creador : creadores) {
