@@ -383,7 +383,7 @@ public class HomeAdminForm extends javax.swing.JFrame {
             //CreadorContenido creador = Dao.obtenerCreadorContenido(contenido.getIdCreador());
             CreadorContenido creador = WSManager.obtenerCreadorContenido(contenido.getIdCreador()); 
             
-            PanelContenido panelContenido = new PanelContenido(contenido, creador, null, this);
+            PanelContenido panelContenido = new PanelContenido(contenido, this.admin, null, this);
             // Seteamos el size del panel para que se ajuste al tamaño del container
             panelContenido.setMaximumSize(panelContenido.getPreferredSize());
             panelContenido.setPreferredSize(panelContenido.getPreferredSize());

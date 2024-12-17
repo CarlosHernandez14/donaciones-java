@@ -50,7 +50,9 @@ public class PanelContenido extends javax.swing.JPanel {
         this.homeAdminForm = homeAdminForm;
 
         // Inicializar data
-        btnProfile.setText(usuario.getNombre());
+        CreadorContenido creadorDelContent = WSManager.obtenerCreadorContenido(this.contenido.getIdCreador());
+        
+        btnProfile.setText(creadorDelContent.getNombre());
         labelTitulo.setText(contenido.getTitulo());
         labelDescription.setText(contenido.getDescripcion());
         panelImage.setIcon(new javax.swing.ImageIcon(contenido.getImagePath()));
@@ -96,14 +98,17 @@ public class PanelContenido extends javax.swing.JPanel {
             //comun eliminamos btn de options
 
             if (this.usuario instanceof CreadorContenido) {
+                //System.out.println("EL USUARIO ES CREADOR DE CONTENIDO");
                 // Si el contenido es suyo se muestra si no no
-                if (!this.usuario.getId().equals(contenido.getIdCreador())) {
+                if (!((CreadorContenido)this.usuario).getIdCreador().equals(contenido.getIdCreador())) {
                     this.btnOptions.setVisible(false);
                 }
             } else if (this.usuario instanceof Administrador) {
+                //System.out.println("EL USUARIO ES ADMINISTRADOR");
                 // Se muestra el boton de opciones
                 this.btnOptions.setVisible(true);
             } else {
+                //System.out.println("EL USUARIO ES USUARIO COMUN");
                 // Si es usuario comun ocultamos boton
                 this.btnOptions.setVisible(false);
             }

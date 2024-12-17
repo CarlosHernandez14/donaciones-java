@@ -284,10 +284,11 @@ public class Login extends javax.swing.JFrame {
         if (usuario != null) {
             // Verficiamos el tipo del usuario si es Usuario, CrearContenido o Administrador
             if (usuario instanceof Administrador) {
+                //System.out.println("ES UN ADMIN");
                 //Creamos un admin object
-                Administrador admin = (Administrador) usuario;
+                
                 // Abrimos la ventana home del admin
-                new HomeAdminForm(admin).setVisible(true);
+                new HomeAdminForm((Administrador) usuario).setVisible(true);
                 //Cerramos la ventana actual
                 this.dispose();
                 
